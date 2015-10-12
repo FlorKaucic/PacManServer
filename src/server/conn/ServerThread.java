@@ -15,8 +15,8 @@ public class ServerThread extends Thread {
 	public void run() {
 		try {
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			String inputLine, outputLine;
+//			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//			String inputLine, outputLine;
 
 			out.println("Conectado.");
 

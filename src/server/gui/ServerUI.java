@@ -133,12 +133,14 @@ public class ServerUI extends JFrame {
 		
 		btnVerPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		contentPane.add(btnVerPartida);
 		
 		btnGestionarUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		contentPane.add(btnGestionarUsuarios);
