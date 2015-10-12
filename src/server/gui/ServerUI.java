@@ -1,4 +1,4 @@
-package gui.server;
+package server.gui;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import conn.server.MultiThreadedServer;
+import server.conn.MultiThreadedServer;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

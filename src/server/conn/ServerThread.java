@@ -1,4 +1,4 @@
-package conn.server;
+package server.conn;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
