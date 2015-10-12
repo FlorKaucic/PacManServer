@@ -20,16 +20,16 @@ public class ServerThread extends Thread {
 
 			out.println("Conectado.");
 
-			while ((inputLine = in.readLine()) != null) {
-				outputLine = "Se recibio: " + inputLine;
-				System.out.println(outputLine);
-				out.println(outputLine);
-				if (inputLine.equals("fin")){
-					System.out.println("Se desconecta un cliente.");
-					break;
-				}
-			}
-			in.close();
+//			while ((inputLine = in.readLine()) != null) {
+//				outputLine = "Se recibio: " + inputLine;
+//				System.out.println(outputLine);
+//				out.println(outputLine);
+//				if (inputLine.equals("fin")){
+//					System.out.println("Se desconecta un cliente.");
+//					break;
+//				}
+//			}
+//			in.close();
 			clientSocket.close();
 		} catch (Exception e) {
 			System.err.println("Fallo.");

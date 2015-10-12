@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import conn.server.MultiThreadedServer;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
@@ -18,6 +21,7 @@ import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class ServerUI extends JFrame {
+	private MultiThreadedServer server = null;
 
 	private JPanel contentPane;
 
@@ -57,57 +61,87 @@ public class ServerUI extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setLayout(null);
 		
 		JButton btnConectarServidor = new JButton("Conectar servidor");
 		btnConectarServidor.setBounds(105, 65, 180, 40);
-		btnConectarServidor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		contentPane.setLayout(null);
-		contentPane.add(btnConectarServidor);
 		
 		JButton btnDesconectarServidor = new JButton("Desconectar servidor");
 		btnDesconectarServidor.setBounds(105, 115, 180, 40);
+		
+		JButton btnCrearPartida = new JButton("Crear partida");
+		btnCrearPartida.setBounds(105, 225, 180, 40);
+		
+		JButton btnVerPartida = new JButton("Ver partida");
+		btnVerPartida.setBounds(105, 275, 180, 40);
+		
+		JButton btnGestionarUsuarios = new JButton("Gestionar usuarios");
+		btnGestionarUsuarios.setBounds(105, 347, 180, 40);
+
+		//Labels
+		JLabel lblEstadoServidor = new JLabel("Estado servidor: Desconectado.");
+		lblEstadoServidor.setBounds(70, 15, 250, 40);
+		lblEstadoServidor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(lblEstadoServidor);
+		
+		JLabel lblEstadoPartida = new JLabel("Estado partida: No hay partida.");
+		lblEstadoPartida.setBounds(70, 175, 250, 40);
+		lblEstadoPartida.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.add(lblEstadoPartida);
+		
+		//ActionListeners
+		btnConectarServidor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Conectar Servidor
+				server = new MultiThreadedServer();
+				do{
+					server.start();
+					if(server.getErrorMessage()!=null)
+						server.changePort();
+				}while(server.getErrorMessage()!=null);
+				btnDesconectarServidor.setEnabled(true);
+				btnCrearPartida.setEnabled(true);
+				lblEstadoServidor.setText("Estado servidor: Conectado.");
+				btnConectarServidor.setEnabled(false);
+			}
+		});
+		contentPane.add(btnConectarServidor);
+		
 		btnDesconectarServidor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Desconectar Servidor
+				server.stopServer();
+				btnConectarServidor.setEnabled(true);
+				btnCrearPartida.setEnabled(false);
+				btnVerPartida.setEnabled(false);
+				lblEstadoServidor.setText("Estado servidor: Desconectado.");
+				lblEstadoPartida.setText("Estado partida: No hay partida.");
+				btnDesconectarServidor.setEnabled(false);
 			}
 		});
 		contentPane.add(btnDesconectarServidor);
 		
-		JButton btnCrearPartida = new JButton("Crear partida");
-		btnCrearPartida.setBounds(105, 225, 180, 40);
 		btnCrearPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Crear Partida
+				btnVerPartida.setEnabled(true);
+				lblEstadoPartida.setText("Estado partida: Partida en juego.");
+				btnCrearPartida.setEnabled(false);
 			}
 		});
 		contentPane.add(btnCrearPartida);
 		
-		JButton btnVerPartida = new JButton("Ver partida");
-		btnVerPartida.setBounds(105, 275, 180, 40);
 		btnVerPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		contentPane.add(btnVerPartida);
 		
-		JButton btnGestionarUsuarios = new JButton("Gestionar usuarios");
-		btnGestionarUsuarios.setBounds(105, 347, 180, 40);
 		btnGestionarUsuarios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		contentPane.add(btnGestionarUsuarios);
-		
-		JLabel lblEstadoServidor = new JLabel("Estado servidor: Desconectado.");
-		lblEstadoServidor.setBounds(95, 15, 200, 40);
-		lblEstadoServidor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(lblEstadoServidor);
-		
-		JLabel lblEstadoPartida = new JLabel("Estado partida: No hay partida.");
-		lblEstadoPartida.setBounds(95, 175, 200, 40);
-		lblEstadoPartida.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		contentPane.add(lblEstadoPartida);
 	
 		btnDesconectarServidor.setEnabled(false);
 		btnCrearPartida.setEnabled(false);
