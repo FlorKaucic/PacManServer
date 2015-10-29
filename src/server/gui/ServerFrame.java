@@ -27,7 +27,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 @SuppressWarnings("serial")
-public class ServerUI extends JFrame {
+public class ServerFrame extends JFrame {
 	private Server server = null;
 
 	private JPanel contentPane;
@@ -62,7 +62,7 @@ public class ServerUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ServerUI frame = new ServerUI();
+					ServerFrame frame = new ServerFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -74,11 +74,11 @@ public class ServerUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ServerUI() {
+	public ServerFrame() {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				int res = JOptionPane.showConfirmDialog(ServerUI.this,
+				int res = JOptionPane.showConfirmDialog(ServerFrame.this,
 						"Si prosigue, se desconectar\u00E1 el servidor.\n¿Desea continuar?", "Salir",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (res == JOptionPane.OK_OPTION) {

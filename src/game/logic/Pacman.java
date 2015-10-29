@@ -1,5 +1,5 @@
 package game.logic;
 
-public class Pacoman {
+public class Pacman {
 	
 }
