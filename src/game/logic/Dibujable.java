@@ -14,5 +14,10 @@ public class Dibujable extends Component {
 	protected int width;
 	protected int height;
 	
-	
+	public void colisiones(){
+		
+	}
+	public void terminar(){
+		
+	}
 }

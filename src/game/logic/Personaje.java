@@ -7,4 +7,13 @@ public class Personaje {
 	boolean poder;
 	int vidaPoder;
 	
+	public void mover(){
+		
+	}
+	public void checkpos(){
+		
+	}
+	public void revivir(){
+		
+	}
 }
