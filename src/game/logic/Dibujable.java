@@ -1,13 +1,18 @@
 package game.logic;
 
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.Image;
 
-public class Dibujable {
-	int posX;
-	int posY;
-	Image img;
-	int ancho;
-	int largo;
+@SuppressWarnings("serial")
+public class Dibujable extends Component {
+	protected Image img;
+	protected int posX;
+	protected int posY;
+	protected int imgX;
+	protected int imgY;
+	protected int width;
+	protected int height;
 	
-
+	
 }
