@@ -1,8 +1,8 @@
 package game.logic;
 
 public class Ghost {
-	int killedPacman;
-	int killedFantasma;
+	private int killedPacman;
+	private int killedFantasma;
 	
 	
 	

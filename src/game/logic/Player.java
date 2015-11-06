@@ -1,9 +1,9 @@
 package game.logic;
 
 public class Player {
-	String nickName;
-	Character per;
-	User usr;
+	private String nickName;
+	private Character per;
+	private User usr;
 	
 	
 }

@@ -1,11 +1,11 @@
 package game.logic;
 
 public class Character {
-	int desX;
-	int desY;
-	int vel;
-	boolean poder;
-	int vidaPoder;
+	protected int desX;
+	protected int desY;
+	protected int vel;
+	protected boolean poder;
+	protected int vidaPoder;
 	
 	public void mover(){
 		

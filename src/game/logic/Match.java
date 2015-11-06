@@ -1,10 +1,10 @@
 package game.logic;
 
 public class Match {
-	long tIni;
-	Character [] personajes;
-	Drawable [] mapTiles;
-	Drawable [] bolitas;
+	private long tIni;
+	private Character [] personajes;
+	private Drawable [] mapTiles;
+	private Drawable [] bolitas;
 	
 	
 	public void colisiones() {
