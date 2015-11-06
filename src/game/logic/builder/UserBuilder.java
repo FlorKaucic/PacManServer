@@ -5,15 +5,20 @@ import game.logic.User;
 public class UserBuilder {
 	private int id;
 	private String username;
-	private char[] password;
+//	private char[] password;
 	private String nickname;
 	private int won = 0;
 	private int lost = 0;
 
-	public UserBuilder(int id, String username, char[] pass) {
+//	public UserBuilder(int id, String username, char[] pass) {
+//		this.id = id;
+//		this.username = username;
+//		password = pass;
+//	}
+	
+	public UserBuilder(int id, String username) {
 		this.id = id;
 		this.username = username;
-		password = pass;
 	}
 	
 	public int getId() {
@@ -22,12 +27,6 @@ public class UserBuilder {
 
 	public String getUsername() {
 		return username;
-	}
-
-
-
-	public char[] getPassword() {
-		return password;
 	}
 
 	public String getNickname() {
@@ -60,4 +59,9 @@ public class UserBuilder {
 	public User build() {
 		return new User(this);
 	}
+	
+	
+//	public char[] getPassword() {
+//		return String.valueOf(password);
+//	}
 }
