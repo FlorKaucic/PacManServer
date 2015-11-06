@@ -4,16 +4,20 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
+import server.config.Config;
+import server.gui.ServerFrame;
 
 public class Server extends Thread {
-	public static int PORT = 0;
-	public static InetAddress IP = null;
+	private int port = 0;
+	private InetAddress ip = null;
 	private ServerSocket serverSocket = null;
-	private String errorMessage = null;
+	private String errorMessage;
 
-	public Server(InetAddress ip, int port) {
-		Server.PORT = port;
-		Server.IP = ip;
+	public Server(String ip, int port) throws UnknownHostException {
+		this.port = port;
+		this.ip = InetAddress.getByName(ip);
 	}
 
 	public String getErrorMessage() {
@@ -21,21 +25,29 @@ public class Server extends Thread {
 	}
 
 	public void changePort() {
-		Server.PORT++;
+		this.port++;
 	}
-
+	
+	@Override
 	public void run() {
-		try {
-			serverSocket = new ServerSocket(Server.PORT, 100, Server.IP);
-			errorMessage = null;
-			System.out.println("Conectado " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort());
-		} catch (IOException e) {
-			errorMessage = "Error con el puerto " + Server.PORT + ".";
-			System.out.println("Corte create");
-			e.printStackTrace();
-			this.stopServer();
+		while(true){
+			try {
+				serverSocket = new ServerSocket(this.port, 100, this.ip);
+				errorMessage = null;
+				System.out.println("Conectado " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort());
+				Config.set("port", String.valueOf(this.port));
+				//Modificar esto para que sea con un getInstance
+				//ServerFrame.changeServerStatus();
+				break;
+			} catch (IOException e) {
+				errorMessage = "Error con el puerto " + this.port + ".";
+				System.out.println("Corte create");
+				System.out.println(errorMessage);
+				e.printStackTrace();
+				this.stopServer();
+				this.changePort();
+			}
 		}
-
 		Socket clientSocket = null;
 		try {
 			while (true) {

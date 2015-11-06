@@ -7,19 +7,15 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import java.io.InputStream;
-
+import server.config.Config;
 import server.conn.Server;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.Properties;
-
+import java.net.UnknownHostException;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,35 +27,24 @@ public class ServerFrame extends JFrame {
 	private Server server = null;
 
 	private JPanel contentPane;
-
+	private JButton btnConectarServidor;
+	private JButton btnDesconectarServidor;
+	private JButton btnCrearPartida;
+	private JButton btnVerPartida;
+	private JButton btnGestionarUsuarios;
+	private JLabel lblDatosServidor;
+	private JLabel lblEstadoServidor;
+	private JLabel lblEstadoPartida;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
-		Properties prop = new Properties();
-		InputStream input = null;
 
-		try {
-			input = new FileInputStream("config.properties");
-			prop.load(input);
+		Config.load();
 
-			Server.IP = InetAddress.getByName(InetAddress.getLocalHost().getHostAddress());
-			Server.PORT = Integer.parseInt(prop.getProperty("port"));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					ServerFrame frame = new ServerFrame();
@@ -86,7 +71,7 @@ public class ServerFrame extends JFrame {
 				}
 			}
 		});
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(dim.width / 2 - 200, dim.height / 2 - 250, 400, 500);
 		setTitle("Servidor");
@@ -94,61 +79,56 @@ public class ServerFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setLayout(null);
-		
-		JButton btnConectarServidor = new JButton("Conectar servidor");
+
+		btnConectarServidor = new JButton("Conectar servidor");
 		btnConectarServidor.setBounds(105, 115, 180, 40);
 
-		JButton btnDesconectarServidor = new JButton("Desconectar servidor");
+		btnDesconectarServidor = new JButton("Desconectar servidor");
 		btnDesconectarServidor.setBounds(105, 165, 180, 40);
 
-		JButton btnCrearPartida = new JButton("Crear partida");
+		btnCrearPartida = new JButton("Crear partida");
 		btnCrearPartida.setBounds(105, 275, 180, 40);
 
-		JButton btnVerPartida = new JButton("Ver partida");
+		btnVerPartida = new JButton("Ver partida");
 		btnVerPartida.setBounds(105, 335, 180, 40);
 
-		JButton btnGestionarUsuarios = new JButton("Gestionar usuarios");
+		btnGestionarUsuarios = new JButton("Gestionar usuarios");
 		btnGestionarUsuarios.setBounds(105, 397, 180, 40);
 
 		//Labels
-		JLabel lblDatosServidor = new JLabel("");
+		lblDatosServidor = new JLabel("");
 		lblDatosServidor.setBounds(70, 5, 250, 40);
 		lblDatosServidor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(lblDatosServidor);
 
-		
-		JLabel lblEstadoServidor = new JLabel("Estado servidor: Desconectado.");
+		lblEstadoServidor = new JLabel("Estado servidor: Desconectado.");
 		lblEstadoServidor.setBounds(70, 55, 250, 40);
 		lblEstadoServidor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(lblEstadoServidor);
 
-		JLabel lblEstadoPartida = new JLabel("Estado partida: No hay partida.");
+		lblEstadoPartida = new JLabel("Estado partida: No hay partida.");
 		lblEstadoPartida.setBounds(70, 235, 250, 40);
 		lblEstadoPartida.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		contentPane.add(lblEstadoPartida);
 
 		//ActionListeners
 		btnConectarServidor.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Conectar Servidor
-				server = new Server(Server.IP, Server.PORT);
-				while (true) {
-					server.start();
-					if (server.getErrorMessage() == null)
-						break;
-					server.changePort();
+				try {
+					server = new Server((String) Config.get("ip"), Integer.parseInt((String) Config.get("port")));
+				} catch (UnknownHostException e1) {
+					e1.printStackTrace();
 				}
-				;
-				btnDesconectarServidor.setEnabled(true);
-				btnCrearPartida.setEnabled(true);
-				lblDatosServidor.setText("Servidor: "+Server.IP+":"+Server.PORT);
-				lblEstadoServidor.setText("Estado servidor: Conectado.");
-				btnConectarServidor.setEnabled(false);
+				server.start();
+				ServerFrame.this.changeServerStatus();
 			}
 		});
 		contentPane.add(btnConectarServidor);
 
 		btnDesconectarServidor.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Desconectar Servidor
 				server.stopServer();
@@ -163,6 +143,7 @@ public class ServerFrame extends JFrame {
 		contentPane.add(btnDesconectarServidor);
 
 		btnCrearPartida.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Crear Partida
 				btnVerPartida.setEnabled(true);
@@ -173,6 +154,7 @@ public class ServerFrame extends JFrame {
 		contentPane.add(btnCrearPartida);
 
 		btnVerPartida.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 			}
@@ -180,6 +162,7 @@ public class ServerFrame extends JFrame {
 		contentPane.add(btnVerPartida);
 
 		btnGestionarUsuarios.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 
 			}
@@ -189,5 +172,13 @@ public class ServerFrame extends JFrame {
 		btnDesconectarServidor.setEnabled(false);
 		btnCrearPartida.setEnabled(false);
 		btnVerPartida.setEnabled(false);
+	}
+	
+	public void changeServerStatus(){
+		btnDesconectarServidor.setEnabled(true);
+		btnCrearPartida.setEnabled(true);
+		lblDatosServidor.setText("Servidor: " + Config.get("ip") + ":" + Config.get("port"));
+		lblEstadoServidor.setText("Estado servidor: Conectado.");
+		btnConectarServidor.setEnabled(false);
 	}
 }
