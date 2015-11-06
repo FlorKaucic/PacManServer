@@ -8,7 +8,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 
 @SuppressWarnings("serial")
-public class Dibujable extends Component {
+public class Drawable extends Component {
 	protected Image img;
 	protected int posX;
 	protected int posY;
@@ -17,7 +17,7 @@ public class Dibujable extends Component {
 	protected int width;
 	protected int height;
 
-	public Dibujable(int posX, int posY, int width, int height) {
+	public Drawable(int posX, int posY, int width, int height) {
 		this.posX = posX;
 		this.posY = posY;
 		this.width = width;
@@ -27,7 +27,7 @@ public class Dibujable extends Component {
 		this.imgY = null;
 	}
 
-	public Dibujable(int posX, int posY, int width, int height, Image img, int value) {
+	public Drawable(int posX, int posY, int width, int height, Image img, int value) {
 		this.posX = posX;
 		this.posY = posY;
 		this.width = width;

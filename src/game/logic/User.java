@@ -21,18 +21,14 @@ public class User {
 		lost = builder.getLost();
 	}
 	
-	public void setId(int i){
-		id = i;
+	public void setId(int id) {
+		this.id = id;
 	}
-	
+		
 	public int getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getUsername() {
 		return username;
 	}

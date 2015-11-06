@@ -1,6 +1,6 @@
 package game.logic;
 
-public class Fantasma {
+public class Ghost {
 	int killedPacman;
 	int killedFantasma;
 	

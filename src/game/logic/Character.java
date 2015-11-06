@@ -1,6 +1,6 @@
 package game.logic;
 
-public class Personaje {
+public class Character {
 	int desX;
 	int desY;
 	int vel;
