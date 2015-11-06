@@ -7,6 +7,7 @@ public class Match {
 	private Drawable [] bolitas;
 	
 	
+	
 	public void colisiones() {
 
 	}
