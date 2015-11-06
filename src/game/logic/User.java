@@ -2,6 +2,8 @@ package game.logic;
 
 import java.util.Arrays;
 
+import game.logic.builder.*;
+
 public class User {
 	private int id;
 	private String username;

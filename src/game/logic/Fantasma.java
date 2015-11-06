@@ -4,4 +4,9 @@ public class Fantasma {
 	int killedPacman;
 	int killedFantasma;
 	
+	
+	
+	
+	
+	
 }
