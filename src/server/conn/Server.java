@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
 import server.config.Config;
-import server.gui.ServerFrame;
 
 public class Server extends Thread {
 	private int port = 0;
