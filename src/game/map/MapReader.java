@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import javax.swing.JOptionPane;
+
 public class MapReader {
 
 	public static int[][] read(String ruta) {
@@ -32,7 +34,7 @@ public class MapReader {
 				nf++;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "No se puede leer el mapa.", "Servidor", JOptionPane.ERROR_MESSAGE);
 		} finally {
 			try {
 				fr.close();

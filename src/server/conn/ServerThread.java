@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 public class ServerThread extends Thread {
 	Socket clientSocket = null;
 	
@@ -32,7 +34,7 @@ public class ServerThread extends Thread {
 			in.close();
 			clientSocket.close();
 		} catch (Exception e) {
-			System.err.println("Fallo.");
+			JOptionPane.showMessageDialog(null, "No se puede conectar con el cliente", "Servidor", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
 public class Config {
 	private static Properties CONFIG;
 	
@@ -18,7 +20,7 @@ public class Config {
 			CONFIG.load(input);
 			CONFIG.put("ip",InetAddress.getLocalHost().getHostAddress());
 		} catch (Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "No se puede cargar properties.", "Servidor", JOptionPane.ERROR_MESSAGE);
 		} finally {
 			if (input != null) {
 				try {

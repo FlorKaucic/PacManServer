@@ -119,7 +119,7 @@ public class ServerFrame extends JFrame {
 				try {
 					server = new Server((String) Config.get("ip"), Integer.parseInt((String) Config.get("port")));
 				} catch (UnknownHostException e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "No se puede conectar servidor", "Servidor", JOptionPane.ERROR_MESSAGE);				
 				}
 				server.start();
 				ServerFrame.this.changeServerStatus();

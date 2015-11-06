@@ -6,6 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JOptionPane;
+
 import server.config.Config;
 import server.gui.ServerFrame;
 
@@ -34,15 +36,15 @@ public class Server extends Thread {
 			try {
 				serverSocket = new ServerSocket(this.port, 100, this.ip);
 				errorMessage = null;
-				System.out.println("Conectado " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort());
+				//System.out.println("Conectado " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort());
+				JOptionPane.showMessageDialog(null, "Conectado " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort(), "Servidor", JOptionPane.INFORMATION_MESSAGE);
 				Config.set("port", String.valueOf(this.port));
 				//Modificar esto para que sea con un getInstance
 				//ServerFrame.changeServerStatus();
 				break;
 			} catch (IOException e) {
 				errorMessage = "Error con el puerto " + this.port + ".";
-				System.out.println("Corte create");
-				System.out.println(errorMessage);
+				JOptionPane.showMessageDialog(null, "Corte create: "+ errorMessage, "Servidor", JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 				this.stopServer();
 				this.changePort();
@@ -59,7 +61,7 @@ public class Server extends Thread {
 			}
 		} catch (IOException e) {
 			errorMessage = "Error al conectar cliente.";
-			System.out.println("Corte cliente");
+			JOptionPane.showMessageDialog(null, "Corte cliente", "Servidor", JOptionPane.ERROR_MESSAGE);
 			this.stopServer();
 		}
 
@@ -70,10 +72,10 @@ public class Server extends Thread {
 			try {
 				serverSocket.close();
 				serverSocket = null;
-				System.out.println("Desconectado");
+				JOptionPane.showMessageDialog(null, "Desconectado", "Servidor", JOptionPane.INFORMATION_MESSAGE);
 			} catch (IOException e) {
 				errorMessage = "No se pudo cerrar el servidor";
-				System.out.println("Corte stop");
+				JOptionPane.showMessageDialog(null, "Corte stop", "Servidor", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

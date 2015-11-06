@@ -11,12 +11,10 @@ import game.logic.User;
 import game.logic.builder.UserBuilder;
 import server.config.Config;
 
-import game.logic.builder.*;
-import game.logic.*;
 public class UserDAO {
 
 	public static User save(String username, String password) throws SQLException {
-		User user = UserBuilder(username).build();
+		User user = new UserBuilder(username).build();
 				
 		String url = "jdbc:mysql://" + Config.get("dbhost") + ":" + Config.get("dbport")+ "/" + Config.get("dbname");
 		Connection con = DriverManager.getConnection(url, Config.get("dbuser"), Config.get("dbpass"));
