@@ -36,6 +36,10 @@ public class User {
 		Arrays.fill(this.password,'0');
 	}
 	
+	public String getPassword(){
+		return String.valueOf(this.password);
+	}
+	
 	public String getNickname() {
 		return nickname;
 	}
