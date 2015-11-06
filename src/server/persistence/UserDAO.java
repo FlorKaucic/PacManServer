@@ -12,16 +12,71 @@ import server.config.Config;
 
 public class UserDAO {
 
-	public static void save(User user) throws SQLException {
+	public static User save(String username, String password) throws SQLException {
+		User user = new UserBuilder(id, username).build();
+				
 		String url = "jdbc:mysql://" + Config.get("dbhost") + ":" + Config.get("dbport")+ "/" + Config.get("dbname");
 		Connection con = DriverManager.getConnection(url, Config.get("dbuser"), Config.get("dbpass"));
 		PreparedStatement st = con.prepareStatement("INSERT INTO tbl_user (username, password, nickname, won, lost) VALUES (?,?,?,?,?);");
-		
+				
 		st.setString(1, user.getUsername());
-		st.setString(2, user.getPassword());
+		st.setString(2, password);
 		st.setString(3, user.getUsername());
-		st.setString(4, user.getUsername());
-		st.setString(5, user.getUsername());
+		st.setInt(4, user.getWonMatches());
+		st.setInt(5, user.getLostMatches());
+		
+		boolean result = st.execute();
+		
+		st.close();
+		con.close();
+		
+		return (result)?user:null;
 	}
 
+	public static User get(String username, String password) throws SQLException {
+		String url = "jdbc:mysql://" + Config.get("dbhost") + ":" + Config.get("dbport")+ "/" + Config.get("dbname");
+		Connection con = DriverManager.getConnection(url, Config.get("dbuser"), Config.get("dbpass"));
+		PreparedStatement st = con.prepareStatement("SELECT * FROM tbl_user WHERE username = ? and password = ?;");
+		ResultSet rs;
+		
+		st.setString(1, username);
+		st.setString(2, password);
+		
+		rs = st.executeQuery();
+		
+		st.close();
+		con.close();
+		
+		User user = null;
+		
+		while(rs.first()){
+			int id = rs.getInt("id");
+			String nickname = rs.getString("nickname");
+			int won = rs.getInt("won");
+			int lost = rs.getInt("lost");
+			
+			user = new UserBuilder(id, username).withNickname(nickname).withWonMatches(won).withLostMatches(lost).build();
+		}
+		
+		return user;
+	}
+	
+	public static int update(User user) throws SQLException {
+		String url = "jdbc:mysql://" + Config.get("dbhost") + ":" + Config.get("dbport")+ "/" + Config.get("dbname");
+		Connection con = DriverManager.getConnection(url, Config.get("dbuser"), Config.get("dbpass"));
+		PreparedStatement st = con.prepareStatement("UPDATE tbl_usuario SET nickname = ?, won = ?, lost = ? WHERE id = ?");
+		
+		st.setString(1, user.getNickname());
+		st.setInt(2, user.getWonMatches());
+		st.setInt(3, user.getLostMatches());
+		st.setInt(4, user.getId());
+		
+		int result = st.executeUpdate();
+		
+		st.close();
+		con.close();
+		
+		return result;
+	}
+	
 }
