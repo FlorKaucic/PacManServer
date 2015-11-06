@@ -15,6 +15,32 @@ public class UserBuilder {
 		this.username = username;
 		password = pass;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
+	public char[] getPassword() {
+		return password;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public int getWon() {
+		return won;
+	}
+
+	public int getLost() {
+		return lost;
+	}
 
 	public UserBuilder withNickname(String nick) {
 		nickname = nick;

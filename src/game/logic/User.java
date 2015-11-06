@@ -12,6 +12,15 @@ public class User {
 	private int won;
 	private int lost;
 
+	public User(UserBuilder builder){
+		id = builder.getId();
+		username = builder.getUsername();
+		//password = builder.getPassword();
+		nickname = builder.getNickname();
+		won = builder.getWon();
+		lost = builder.getLost();
+	}
+	
 	
 	public int getId() {
 		return id;
