@@ -1,19 +1,24 @@
 package game.logic;
 
-public class Character {
+@SuppressWarnings("serial")
+public class Character extends Drawable {
 	int desX;
 	int desY;
 	int vel;
 	boolean poder;
 	int vidaPoder;
 	
-	public void mover(){
+	public Character(int posX, int posY, int width, int height) {
+		super(posX, posY, width, height);
+	}
+	
+	public void move(){
 		
 	}
-	public void checkpos(){
+	public void checkPos(){
 		
 	}
-	public void revivir(){
+	public void respawn(){
 		
 	}
 }
