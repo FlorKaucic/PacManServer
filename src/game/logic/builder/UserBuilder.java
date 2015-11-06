@@ -30,9 +30,10 @@ public class UserBuilder {
 		return this;
 	}
 	
-	
-	
 	public User build(){
 		return new User(this);
 	}
+	
+	
+	
 }
