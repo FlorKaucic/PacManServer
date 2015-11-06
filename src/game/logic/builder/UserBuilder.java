@@ -10,26 +10,13 @@ public class UserBuilder {
 	private int won = 0;
 	private int lost = 0;
 
-<<<<<<< HEAD
-=======
-//	public UserBuilder(int id, String username, char[] pass) {
-//		this.id = id;
-//		this.username = username;
-//		password = pass;
-//	}
-	
->>>>>>> branch 'master' of https://github.com/FlorKaucic/PacManServer.git
 	public UserBuilder(int id, String username) {
 		this.id = id;
 		this.username = username;
-<<<<<<< HEAD
-		//password = pass;
 	}
 	
 	public UserBuilder(String username) {
 		this.username = username;
-=======
->>>>>>> branch 'master' of https://github.com/FlorKaucic/PacManServer.git
 	}
 	
 	public int getId() {
@@ -38,13 +25,6 @@ public class UserBuilder {
 
 	public String getUsername() {
 		return username;
-<<<<<<< HEAD
-	}
-
-	public char[] getPassword() {
-		return password;
-=======
->>>>>>> branch 'master' of https://github.com/FlorKaucic/PacManServer.git
 	}
 
 	public String getNickname() {
@@ -87,6 +67,12 @@ public class UserBuilder {
 		return new User(this);
 	}
 	
+	
+//	public UserBuilder(int id, String username, char[] pass) {
+//	this.id = id;
+//	this.username = username;
+//	password = pass;
+//}
 	
 //	public char[] getPassword() {
 //		return String.valueOf(password);

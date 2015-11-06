@@ -11,12 +11,10 @@ import game.logic.User;
 import game.logic.builder.UserBuilder;
 import server.config.Config;
 
-import game.logic.builder.*;
-import game.logic.*;
 public class UserDAO {
 
 	public static User save(String username, String password) throws SQLException {
-		User user = UserBuilder(username).build();
+		User user = new UserBuilder(username).build();
 				
 		String url = "jdbc:mysql://" + Config.get("dbhost") + ":" + Config.get("dbport")+ "/" + Config.get("dbname");
 		Connection con = DriverManager.getConnection(url, Config.get("dbuser"), Config.get("dbpass"));
@@ -101,6 +99,35 @@ public class UserDAO {
 		con.close();
 		
 		return result;
+	}
+	
+	public static User[] getAll() throws SQLException {
+		String url = "jdbc:mysql://" + Config.get("dbhost") + ":" + Config.get("dbport")+ "/" + Config.get("dbname");
+		Connection con = DriverManager.getConnection(url, Config.get("dbuser"), Config.get("dbpass"));
+		PreparedStatement st = con.prepareStatement("SELECT username, won, lost  FROM tbl_user;");
+		ResultSet rs = st.executeQuery();
+		
+		st.close();
+		con.close();
+		
+		int cant = 0;
+		while(rs.next())
+			cant++;
+		rs.beforeFirst();
+		
+		User[] users = new User[cant];
+		
+		for(int i = 0; i < cant; i++){
+			rs.next();
+			
+			String username = rs.getString("username");
+			int won = rs.getInt("won");
+			int lost = rs.getInt("lost");
+			
+			users[i] = new UserBuilder(username).withWonMatches(won).withLostMatches(lost).build();
+		}
+		
+		return users;
 	}
 	
 }
