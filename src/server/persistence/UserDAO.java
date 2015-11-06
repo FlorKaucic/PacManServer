@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import game.logic.User;
 import server.config.Config;
 
+import game.logic.builder.*;
+import game.logic.*;
 public class UserDAO {
 
 	public static User save(String username, String password) throws SQLException {

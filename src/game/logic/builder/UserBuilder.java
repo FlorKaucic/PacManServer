@@ -10,10 +10,14 @@ public class UserBuilder {
 	private int won = 0;
 	private int lost = 0;
 
-	public UserBuilder(int id, String username, char[] pass) {
+	public UserBuilder(int id, String username) {
 		this.id = id;
 		this.username = username;
-		password = pass;
+		//password = pass;
+	}
+	
+	public UserBuilder(String username) {
+		this.username = username;
 	}
 	
 	public int getId() {
@@ -23,8 +27,6 @@ public class UserBuilder {
 	public String getUsername() {
 		return username;
 	}
-
-
 
 	public char[] getPassword() {
 		return password;
@@ -42,6 +44,15 @@ public class UserBuilder {
 		return lost;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public UserBuilder withId(int id) {
+		this.id = id;
+		return this;
+	}
+	
 	public UserBuilder withNickname(String nick) {
 		nickname = nick;
 		return this;
