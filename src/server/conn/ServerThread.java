@@ -23,13 +23,12 @@ public class ServerThread extends Thread {
 			out.println("Conectado.");
 
 			while ((inputLine = in.readLine()) != null) {
-				outputLine = "Se recibio: " + inputLine;
-				System.out.println(outputLine);
+				outputLine = ServerProtocol.processInput(inputLine);
 				out.println(outputLine);
-				if (inputLine.equals("fin")){
-					System.out.println("Se desconecta un cliente.");
-					break;
-				}
+//				if (inputLine.equals("fin")){
+//					System.out.println("Se desconecta un cliente.");
+//					break;
+//				}
 			}
 			in.close();
 			clientSocket.close();
