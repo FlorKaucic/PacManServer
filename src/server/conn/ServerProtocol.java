@@ -3,8 +3,6 @@ package server.conn;
 import java.sql.SQLException;
 
 import game.logic.User;
-import game.map.MapReader;
-import server.config.Config;
 import server.persistence.UserDAO;
 
 public class ServerProtocol {
@@ -36,6 +34,7 @@ public class ServerProtocol {
 			}
 			if(user==null)
 				return "LOGUPFAILED";
+			return "LOGUPOK "+user.getId()+" "+user.getNickname();
 		}
 		if(input.startsWith("LOGIN")){
 			String[] data = input.substring(5).split(" ");
@@ -48,10 +47,11 @@ public class ServerProtocol {
 			}
 			if(user==null)
 				return "LOGINFAILED";
+			return "LOGINOK "+user.getId()+" "+user.getNickname();
 		}
-		if(input.startsWith("GETMAP")){
-			
-		}
+//		if(input.startsWith("GETMAP")){
+//			
+//		}
 		return null;
 	}	
 }
