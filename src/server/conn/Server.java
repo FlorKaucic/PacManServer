@@ -35,15 +35,12 @@ public class Server extends Thread {
 			try {
 				serverSocket = new ServerSocket(this.port, 100, this.ip);
 				errorMessage = null;
-				//System.out.println("Conectado " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort());
-				JOptionPane.showMessageDialog(null, "Conectado " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort(), "Servidor", JOptionPane.INFORMATION_MESSAGE);
+				System.out.println("Conectado " + serverSocket.getInetAddress() + ":" + serverSocket.getLocalPort());
 				Config.set("port", String.valueOf(this.port));
-				//Modificar esto para que sea con un getInstance
-				//ServerFrame.changeServerStatus();
 				break;
 			} catch (IOException e) {
-				errorMessage = "Error con el puerto " + this.port + ".";
-				JOptionPane.showMessageDialog(null, "Corte create: "+ errorMessage, "Servidor", JOptionPane.ERROR_MESSAGE);
+				errorMessage = "Error al conectar con el puerto " + this.port + ".";
+				System.out.println(errorMessage);
 				e.printStackTrace();
 				this.stopServer();
 				this.changePort();
@@ -60,7 +57,7 @@ public class Server extends Thread {
 			}
 		} catch (IOException e) {
 			errorMessage = "Error al conectar cliente.";
-			JOptionPane.showMessageDialog(null, "Corte cliente", "Servidor", JOptionPane.ERROR_MESSAGE);
+			System.out.println(errorMessage);
 			this.stopServer();
 		}
 

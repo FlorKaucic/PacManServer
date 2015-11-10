@@ -24,7 +24,7 @@ public class ServerProtocol {
 	
 	public static String processInput(String input){
 		if(input.startsWith("LOGUP")){
-			String[] data = input.substring(5).split(" ");
+			String[] data = input.substring(6).split(" ");
 			User user = null;
 			try {
 				user = UserDAO.save(data[0], data[1]);
@@ -37,7 +37,7 @@ public class ServerProtocol {
 			return "LOGUPOK "+user.getId()+" "+user.getNickname();
 		}
 		if(input.startsWith("LOGIN")){
-			String[] data = input.substring(5).split(" ");
+			String[] data = input.substring(6).split(" ");
 			User user = null;
 			try {
 				user = UserDAO.get(data[0], data[1]);
@@ -52,6 +52,19 @@ public class ServerProtocol {
 //		if(input.startsWith("GETMAP")){
 //			
 //		}
+		if(input.startsWith("GETALLSTATS")){
+			try {
+				User[] users = UserDAO.getAll();
+
+				StringBuffer str = new StringBuffer();
+				str.append("STATSOK ");
+				for(User u : users)
+					str.append(u.getUsername()+" "+u.getWonMatches()+" "+u.getLostMatches()+" ");
+				return str.toString();
+			} catch (SQLException e) {
+				return "STATSFAILED";
+			}
+		}
 		return null;
 	}	
 }

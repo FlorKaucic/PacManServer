@@ -12,10 +12,13 @@ import javax.swing.border.EmptyBorder;
 
 import server.config.Config;
 import server.conn.Server;
+import server.persistence.UserDAO;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -42,7 +45,7 @@ public class ServerFrame extends JFrame {
 	public static void main(String[] args) {
 
 		Config.load();
-
+		
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {

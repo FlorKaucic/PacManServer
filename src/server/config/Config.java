@@ -1,8 +1,10 @@
 package server.config;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.util.Properties;
 
@@ -25,6 +27,25 @@ public class Config {
 			if (input != null) {
 				try {
 					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public static void save(){
+		OutputStream output = null;
+		
+		try {
+			output = new FileOutputStream("sconfig.properties");
+			CONFIG.store(output, null);
+		} catch (IOException io) {
+			JOptionPane.showMessageDialog(null, "No se pudieron guardar los cambios en la configuracion.", "Error", JOptionPane.ERROR_MESSAGE);
+		} finally {
+			if (output != null) {
+				try {
+					output.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
