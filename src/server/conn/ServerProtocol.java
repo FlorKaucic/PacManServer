@@ -57,12 +57,11 @@ public class ServerProtocol {
 		}
 		if(input.startsWith("GETALLSTATS")){
 			try {
-				User[] users = UserDAO.getAll();
+				User[] users = UserDAO.getAllEnabled();
 
 				StringBuffer str = new StringBuffer();
 				str.append("STATSOK ");
 				for(User u : users)
-					if(u.isEnabled())
 						str.append(u.getUsername()+" "+u.getWonMatches()+" "+u.getLostMatches()+" ");
 				return str.toString();
 			} catch (SQLException e) {

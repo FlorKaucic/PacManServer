@@ -168,7 +168,8 @@ public class ServerFrame extends JFrame {
 		btnGestionarUsuarios.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				UserMgrFrame usrm = new UserMgrFrame();
+				usrm.setVisible(true);
 			}
 		});
 		contentPane.add(btnGestionarUsuarios);
