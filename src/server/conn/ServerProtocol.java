@@ -62,7 +62,8 @@ public class ServerProtocol {
 				StringBuffer str = new StringBuffer();
 				str.append("STATSOK ");
 				for(User u : users)
-					str.append(u.getUsername()+" "+u.getWonMatches()+" "+u.getLostMatches()+" ");
+					if(u.isEnabled())
+						str.append(u.getUsername()+" "+u.getWonMatches()+" "+u.getLostMatches()+" ");
 				return str.toString();
 			} catch (SQLException e) {
 				return "STATSFAILED";
