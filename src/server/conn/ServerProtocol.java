@@ -21,8 +21,6 @@ public class ServerProtocol {
 	// LOGINOK PACMAN/GHOST id nickname
 	// LOGINFAILED [...]
 	
-	
-	
 	public static String processInput(String input){
 		if(input.startsWith("LOGUP")){
 			String[] data = input.substring(6).split(" ");
@@ -58,7 +56,6 @@ public class ServerProtocol {
 		if(input.startsWith("GETALLSTATS")){
 			try {
 				User[] users = UserDAO.getAll();
-
 				StringBuffer str = new StringBuffer();
 				str.append("STATSOK ");
 				for(User u : users)
