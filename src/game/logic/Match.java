@@ -11,17 +11,28 @@ public class Match {
 	private static Match INSTANCE = null;
 
 	private Match() {
-		map = MapReader.read("res/borrar/map_0.in");
+		map = MapReader.read("res/map/map_0.in");
 	}
 
-	public Match getInstance() {
+	public static Match getInstance() {
 		if(INSTANCE == null)
 			INSTANCE = new Match();
 		return INSTANCE;
 	}
+
+	public void start(){
+		tIni = System.currentTimeMillis();
+	}
 	
-	public String getMapAsString(){
-		return ""; // CHANGE
+	public String getMapAsStrings(){
+		String mapstring = "";
+		for(int i = 0; i < map.length; i++){
+			for(int j = 0; j < map[0].length; j++){
+				mapstring += map[i][j] + " ";
+			}
+			mapstring += "ELN";
+		}
+		return mapstring;
 	}
 
 	public void colisiones() {

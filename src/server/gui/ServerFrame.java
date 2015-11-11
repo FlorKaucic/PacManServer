@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
+import game.logic.Match;
 import server.config.Config;
 import server.conn.Server;
 import server.persistence.UserDAO;

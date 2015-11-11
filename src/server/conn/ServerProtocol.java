@@ -2,6 +2,7 @@ package server.conn;
 
 import java.sql.SQLException;
 
+import game.logic.Match;
 import game.logic.User;
 import server.persistence.UserDAO;
 
@@ -49,9 +50,11 @@ public class ServerProtocol {
 				return "LOGINFAILED";
 			return "LOGINOK "+user.getId()+" "+user.getNickname();
 		}
-//		if(input.startsWith("GETMAP")){
-//			
-//		}
+		if(input.startsWith("GETMAP")){
+			// CHANGE
+			// AGREGAR A LISTA DE BROADCAST
+			return "MAPOK " + Match.getInstance().getMapAsStrings();			
+		}
 		if(input.startsWith("GETALLSTATS")){
 			try {
 				User[] users = UserDAO.getAll();

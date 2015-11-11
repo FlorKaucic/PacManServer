@@ -35,8 +35,8 @@ public class UserDAO {
 		rs.close();		
 		st.close();
 		
-		st = con.prepareStatement("INSERT INTO tbl_user (username, password, nickname, won, lost) "
-				+ "VALUES (?,?,?,?,?);");
+		st = con.prepareStatement("INSERT INTO tbl_user (username, password, nickname, won, lost, enabled) "
+				+ "VALUES (?,?,?,?,?, true);");
 		
 		st.setString(1, user.getUsername());
 		st.setString(2, password);

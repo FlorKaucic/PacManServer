@@ -9,6 +9,7 @@ public class UserBuilder {
 	private String nickname;
 	private int won = 0;
 	private int lost = 0;
+	private boolean enabled = true;
 	
 	
 	public UserBuilder(int id, String username) {
@@ -21,27 +22,27 @@ public class UserBuilder {
 	}
 	
 	public int getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getUsername() {
-		return username;
+		return this.username;
 	}
 
 	public String getNickname() {
-		return nickname;
+		return this.nickname;
 	}
 
 	public int getWon() {
-		return won;
+		return this.won;
 	}
 
 	public int getLost() {
-		return lost;
+		return this.lost;
 	}
-
-	public void setId(int id) {
-		this.id = id;
+	
+	public boolean getEnabled() {
+		return this.enabled;
 	}
 
 	public UserBuilder withId(int id) {
@@ -49,18 +50,23 @@ public class UserBuilder {
 		return this;
 	}
 	
-	public UserBuilder withNickname(String nick) {
-		nickname = nick;
+	public UserBuilder withNickname(String nickname) {
+		this.nickname = nickname;
 		return this;
 	}
 
-	public UserBuilder withWonMatches(int w) {
-		won = w;
+	public UserBuilder withWonMatches(int won) {
+		this.won = won;
 		return this;
 	}
 
-	public UserBuilder withLostMatches(int l) {
-		lost = l;
+	public UserBuilder withLostMatches(int lost) {
+		this.lost = lost;
+		return this;
+	}
+	
+	public UserBuilder withEnabled(boolean enabled){
+		this.enabled = enabled;
 		return this;
 	}
 
