@@ -52,7 +52,7 @@ public class Server extends Thread {
 				clientSocket = serverSocket.accept();
 				Thread t = new ServerThread(clientSocket);
 				t.start();
-				System.out.println("Nuevo client");
+				System.out.println("Nuevo cliente");
 				errorMessage = null;
 			}
 		} catch (IOException e) {
@@ -68,10 +68,10 @@ public class Server extends Thread {
 			try {
 				serverSocket.close();
 				serverSocket = null;
-				JOptionPane.showMessageDialog(null, "Desconectado", "Servidor", JOptionPane.INFORMATION_MESSAGE);
+				System.out.println("Desconectado");
 			} catch (IOException e) {
 				errorMessage = "No se pudo cerrar el servidor";
-				JOptionPane.showMessageDialog(null, "Corte stop", "Servidor", JOptionPane.ERROR_MESSAGE);
+				System.out.println(errorMessage);
 			}
 		}
 	}
