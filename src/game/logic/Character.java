@@ -1,17 +1,23 @@
 package game.logic;
 
-@SuppressWarnings("serial")
 public class Character extends Drawable {
 	protected int desX;
 	protected int desY;
 	protected int vel;
-	protected int power = -1;
+	protected int power;
 	protected int powerSpan;
 	protected int life;
 	protected int lifeSpan;
+	protected boolean moving;
 	
-	public Character(int posX, int posY, int width, int height) {
-		super(posX, posY, width, height);
+	public Character(int posX, int posY, int width, int height, int vel, String img, int lifeSpan, int powerSpan) {
+		super(posX, posY, width, height, img);
+		this.vel = vel;
+		this.moving = false;
+		this.life = 1;
+		this.power = -1;
+		this.lifeSpan = lifeSpan;
+		this.powerSpan = powerSpan;
 	}
 	
 	public void update(){

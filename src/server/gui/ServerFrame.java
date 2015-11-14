@@ -13,13 +13,9 @@ import javax.swing.border.EmptyBorder;
 import game.logic.Match;
 import server.config.Config;
 import server.conn.Server;
-import server.persistence.UserDAO;
-
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -121,11 +117,11 @@ public class ServerFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//Conectar Servidor
 				try {
-					server = new Server((String) Config.get("ip"), Integer.parseInt((String) Config.get("port")));
+					server = new Server(Config.get("ip"), Integer.parseInt(Config.get("port")));
 				} catch (UnknownHostException e1) {
 					JOptionPane.showMessageDialog(null, "No se puede conectar servidor", "Servidor", JOptionPane.ERROR_MESSAGE);				
 				}
-				server.start();
+				server.start();					
 				ServerFrame.this.changeServerStatus();
 			}
 		});
@@ -151,6 +147,27 @@ public class ServerFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//Crear Partida
 				btnVerPartida.setEnabled(true);
+				Match match = Match.getInstance();
+				//CHANGE
+				match.start();
+				Thread t = new Thread(){
+					@Override
+					public void run(){
+						while(!match.isFinished()){
+							System.out.println("Todavia no termino... "+match.getTimePassed());
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						System.out.println("Partida terminada. "+match.getTimePassed());
+						btnCrearPartida.setEnabled(true);
+						btnVerPartida.setEnabled(false);
+					}
+				};
+				t.start();
 				lblEstadoPartida.setText("Estado partida: Partida en juego.");
 				btnCrearPartida.setEnabled(false);
 			}
