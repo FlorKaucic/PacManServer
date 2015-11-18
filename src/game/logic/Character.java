@@ -10,8 +10,8 @@ public class Character extends Drawable {
 	protected int lifeSpan;
 	protected boolean moving;
 	
-	public Character(int posX, int posY, int width, int height, int vel, String img, int lifeSpan, int powerSpan) {
-		super(posX, posY, width, height, img);
+	public Character(int posX, int posY, int width, int height, int vel, int lifeSpan, int powerSpan) {
+		super(posX, posY, width, height);
 		this.vel = vel;
 		this.moving = false;
 		this.life = 1;

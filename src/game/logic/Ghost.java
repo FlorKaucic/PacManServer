@@ -4,8 +4,8 @@ public class Ghost extends Character {
 	private int pacmansKilled;
 	private int ghostsKilled;
 	
-	public Ghost(int posX, int posY, int width, int height, int vel, String img, int lifeSpan, int powerSpan) {
-		super(posX, posY, width, height, vel, img, lifeSpan, powerSpan);
+	public Ghost(int posX, int posY, int width, int height, int vel, int lifeSpan, int powerSpan) {
+		super(posX, posY, width, height, vel, lifeSpan, powerSpan);
 		this.pacmansKilled = 0;
 		this.ghostsKilled = 0;
 	}

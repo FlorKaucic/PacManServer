@@ -39,7 +39,6 @@ public class Match {
 
 	public int addCharacter() {
 		int x, y, w, h, v, l, p;
-		String i;
 		if(characters.isEmpty()){
 
 			System.out.println("Pacman");
@@ -50,10 +49,9 @@ public class Match {
 			v = Integer.parseInt(Config.get("pacman_vel"));
 			l = Integer.parseInt(Config.get("pacman_lifespan"));
 			p = Integer.parseInt(Config.get("pacman_powerspan"));
-			i = Config.get("pacman_img");
 
-			System.out.println(x+y+w+h+v+i);
-			characters.add(new Pacman(x,y,w,h,v,i,l,p));
+			System.out.println(x+y+w+h+v);
+			characters.add(new Pacman(x,y,w,h,v,l,p));
 			return 0;
 		}
 		if(characters.size() < 4){
@@ -66,10 +64,9 @@ public class Match {
 			v = Integer.parseInt(Config.get("ghost_vel"));
 			l = Integer.parseInt(Config.get("pacman_lifespan"));
 			p = Integer.parseInt(Config.get("pacman_powerspan"));
-			i = Config.get("ghost_img");
 
-			System.out.println(x+y+w+h+v+i);
-			characters.add(new Ghost(x,y,w,h,v,i,l,p));
+			System.out.println(x+y+w+h+v);
+			characters.add(new Ghost(x,y,w,h,v,l,p));
 		}
 		return -1;
 	}
