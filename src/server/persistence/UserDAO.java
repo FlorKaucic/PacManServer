@@ -123,17 +123,51 @@ public class UserDAO {
 		String statement = new String("UPDATE tbl_user SET enabled = FALSE WHERE id IN (");
 		
 		for(int i = 0; i < idlist.length; i++)
+			if(idlist[i]!=-1)
 			statement += "?, ";
+			else
+				break;
 		
 		statement = statement.substring(0, statement.length()-2) + ")";
 		
-		System.out.println(statement);
+		//System.out.println(statement);
 		
 		PreparedStatement st = con.prepareStatement(statement);
 		
 		for(int i = 0; i < idlist.length; i++)
-			st.setInt(i+1, idlist[i]);
+			if(idlist[i]!=-1)
+				st.setInt(i+1, idlist[i]);
+			else
+				break;
+		st.executeUpdate();
 		
+		st.close();
+		con.close();
+	}
+	
+	public static void enable(int[] idlist) throws SQLException {
+		String url = "jdbc:mysql://" + Config.get("dbhost") + ":" + Config.get("dbport")+ "/" + Config.get("dbname");
+		Connection con = DriverManager.getConnection(url, Config.get("dbuser"), Config.get("dbpass"));
+		
+		String statement = new String("UPDATE tbl_user SET enabled = TRUE WHERE id IN (");
+		
+		for(int i = 0; i < idlist.length; i++)
+			if(idlist[i]!=-1)
+			statement += "?, ";
+			else
+				break;
+		
+		statement = statement.substring(0, statement.length()-2) + ")";
+		
+		//System.out.println(statement);
+		
+		PreparedStatement st = con.prepareStatement(statement);
+		
+		for(int i = 0; i < idlist.length; i++)
+			if(idlist[i]!=-1)
+				st.setInt(i+1, idlist[i]);
+			else
+				break;
 		st.executeUpdate();
 		
 		st.close();

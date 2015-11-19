@@ -14,6 +14,7 @@ import game.logic.Match;
 import server.config.Config;
 import server.conn.Server;
 import server.persistence.UserDAO;
+import server.gui.UserMgrFrame;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
