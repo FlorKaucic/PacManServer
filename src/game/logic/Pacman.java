@@ -1,10 +1,9 @@
 package game.logic;
 
-@SuppressWarnings("serial")
 public class Pacman extends Character {
 	
-	public Pacman(int posX, int posY, int width, int height) {
-		super(posX, posY, width, height);
+	public Pacman(int posX, int posY, int width, int height, int vel, int lifeSpan, int powerSpan) {
+		super(posX, posY, width, height, vel, lifeSpan, powerSpan);
 	}
 	
 }

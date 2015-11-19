@@ -31,7 +31,8 @@ public class ServerThread extends Thread {
 			in.close();
 			clientSocket.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "No se puede comunicar con el cliente", "Servidor", JOptionPane.ERROR_MESSAGE);
+//			JOptionPane.showMessageDialog(null, "No se puede comunicar con el cliente", "Servidor", JOptionPane.ERROR_MESSAGE);
+			System.out.println("No se puede comunicar con el cliente.");
 		}
 	}
 	
