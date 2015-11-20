@@ -45,4 +45,8 @@ public class ServerThread extends Thread {
 			dialog.setVisible(true);
 		}
 	}
+
+	public void send(String message) {
+		out.println(message);
+	}
 }
