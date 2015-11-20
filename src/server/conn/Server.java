@@ -1,14 +1,10 @@
 package server.conn;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import javax.swing.Timer;
 
 import server.config.Config;
 import server.conn.alert.ClientAlert;
@@ -57,15 +53,6 @@ public class Server extends Thread {
 				t.start();
 				System.out.println("Nuevo cliente");
 				ClientAlert dialog = new ClientAlert("Se conecto un cliente.");
-				dialog.setBounds(50, 50, 200, 100);
-				Timer timer = new Timer(1000, new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						dialog.setVisible(false);
-						dialog.dispose();
-					}
-				});
-				timer.start();
 				dialog.setVisible(true);
 				errorMessage = null;
 			}
