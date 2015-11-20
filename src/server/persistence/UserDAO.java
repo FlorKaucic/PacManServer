@@ -137,6 +137,7 @@ public class UserDAO {
 		for(int i = 0; i < idlist.length; i++)
 			if(idlist[i]!=-1)
 				st.setInt(i+1, idlist[i]);
+			
 			else
 				break;
 		st.executeUpdate();
@@ -166,6 +167,7 @@ public class UserDAO {
 		for(int i = 0; i < idlist.length; i++)
 			if(idlist[i]!=-1)
 				st.setInt(i+1, idlist[i]);
+			
 			else
 				break;
 		st.executeUpdate();

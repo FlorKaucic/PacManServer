@@ -125,29 +125,27 @@ public class UserMgrFrame extends JFrame {
 					for(int i = 0; i<changes.length;i++){
 						if(changes[i]){
 							if((boolean) data[i][2]){
-								idlistE[indE] = i;
+								idlistE[indE] = i+1;
 								indE++;
 							}
 							else{
-								idlistD[indD]=i;
+								idlistD[indD]=i+1;
 								indD++;
 							}
 						}
 					}
 					
 					try {
-						if(idlistD[0]!=-1){
+						if(idlistD[0]!=-1)
 							UserDAO.disable(idlistD);
-							//System.out.println("deshabilitado");
-						}
-						if(idlistE[0]!=-1){
-							UserDAO.enable(idlistE);
-							//System.out.println("Habilitado");
 							
-						}
+						if(idlistE[0]!=-1)
+							UserDAO.enable(idlistE);
+					
 						model.setChange();
 						JOptionPane.showMessageDialog(null, "Cambios guardados correctamente", "Gestión de usuarios",
 								JOptionPane.INFORMATION_MESSAGE);
+						UserMgrFrame.this.dispose();
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "No se pudo guardar los cambios en los usuarios.", "Gestión de usuarios",
 								JOptionPane.ERROR_MESSAGE);
