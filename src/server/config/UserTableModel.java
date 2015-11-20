@@ -1,15 +1,16 @@
 package server.config;
-import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 
+@SuppressWarnings("serial")
 public class UserTableModel extends AbstractTableModel
 {
     private final Object [][] data;
     
     private final String[] columnNames = { "ID", "Usuario", "Habilitado"};
     
-    private final Class[] columnClass = new Class[] {
+    @SuppressWarnings("rawtypes")
+	private final Class[] columnClass = new Class[] {
         Integer.class, String.class, Boolean.class
     };
 

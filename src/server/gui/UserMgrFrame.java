@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
-import javax.swing.JMenuBar;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,6 +30,7 @@ public class UserMgrFrame extends JFrame {
 	private JTable table;
 	private Object[][] data = null;
 	private int cantUsers=0;
+	@SuppressWarnings("unused")
 	private boolean [] changes;
 	UserTableModel model;
 	private JButton btnGuardarCambios;
@@ -39,6 +39,7 @@ public class UserMgrFrame extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					UserMgrFrame frame = new UserMgrFrame();
@@ -108,6 +109,7 @@ public class UserMgrFrame extends JFrame {
 		
 		btnGuardarCambios = new JButton("Guardar Cambios");
 		btnGuardarCambios.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean [] changes;
 				if(model.isThereChanges()){
