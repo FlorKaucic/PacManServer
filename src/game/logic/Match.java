@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import game.map.MapReader;
 import server.config.Config;
+import server.conn.ServerThread;
 
 public class Match {
 	private long tIni = 0;
@@ -13,11 +14,13 @@ public class Match {
 	private ArrayList<Drawable> superballs;
 	private static Match INSTANCE = null;
 	private boolean playing = false;
-
+	private ArrayList<ServerThread> listeners = null;
+	
 	private Match() {
 		characters = new ArrayList<Character>();
 		balls = new ArrayList<Drawable>();
 		superballs = new ArrayList<Drawable>();
+		listeners = new ArrayList<ServerThread>();
 		map = MapReader.read("res/map/map_0.in");
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[0].length; j++) {
@@ -69,6 +72,15 @@ public class Match {
 		return -1;
 	}
 
+	public void addListener(ServerThread client){
+		this.listeners.add(client);
+	}
+	
+	public void broadcast(String message){
+		for(ServerThread listener : listeners)
+			listener.send(message);
+	}
+	
 	public void start() {
 		tIni = System.currentTimeMillis();
 		playing = true;
