@@ -13,12 +13,8 @@ import javax.swing.border.EmptyBorder;
 import game.logic.Match;
 import server.config.Config;
 import server.conn.Server;
-<<<<<<< HEAD
-import server.persistence.UserDAO;
 import server.gui.UserMgrFrame;
 
-=======
->>>>>>> branch 'master' of https://github.com/FlorKaucic/PacManServer.git
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.UnknownHostException;

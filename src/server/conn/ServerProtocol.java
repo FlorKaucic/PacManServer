@@ -33,23 +33,8 @@ public class ServerProtocol {
 			// AGREGAR A LISTA DE BROADCAST
 			return "MAPOK " + Match.getInstance().getMapAsString();
 		}
-<<<<<<< HEAD
-		if(input.startsWith("GETALLSTATS")){
-			try {
-				User[] users = UserDAO.getAllEnabled();
-
-				StringBuffer str = new StringBuffer();
-				str.append("STATSOK ");
-				for(User u : users)
-						str.append(u.getUsername()+" "+u.getWonMatches()+" "+u.getLostMatches()+" ");
-				return str.toString();
-			} catch (SQLException e) {
-				return "STATSFAILED";
-			}
-=======
 		if (input.startsWith("GETALLSTATS")) {
 			return processStats();
->>>>>>> branch 'master' of https://github.com/FlorKaucic/PacManServer.git
 		}
 		return null;
 	}
