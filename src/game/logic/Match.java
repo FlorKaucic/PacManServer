@@ -40,7 +40,6 @@ public class Match {
 	public int addCharacter() {
 		int x, y, w, h, v, l, p;
 		if(characters.isEmpty()){
-
 			System.out.println("Pacman");
 			x = Integer.parseInt(Config.get("pacman_posX"));
 			y = Integer.parseInt(Config.get("pacman_posY"));
@@ -55,7 +54,6 @@ public class Match {
 			return 0;
 		}
 		if(characters.size() < 4){
-
 			System.out.println("Ghost");
 			x = Integer.parseInt(Config.get("ghost_posX"));
 			y = Integer.parseInt(Config.get("ghost_posY"));

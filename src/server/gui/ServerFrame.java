@@ -11,6 +11,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import game.logic.Match;
+import game.logic.match.MatchHandler;
 import server.config.Config;
 import server.conn.Server;
 import server.gui.UserMgrFrame;
@@ -149,26 +150,9 @@ public class ServerFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//Crear Partida
 				btnVerPartida.setEnabled(true);
-				Match match = Match.getInstance();
-				//CHANGE
-				match.start();
-				Thread t = new Thread(){
-					@Override
-					public void run(){
-						while(!match.isFinished()){
-							System.out.println("Todavia no termino... "+match.getTimePassed());
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-						System.out.println("Partida terminada. "+match.getTimePassed());
-						btnCrearPartida.setEnabled(true);
-						btnVerPartida.setEnabled(false);
-					}
-				};
+				Match.getInstance();
+				MatchHandler t = new MatchHandler();
+				t.setCaller(ServerFrame.this);
 				t.start();
 				lblEstadoPartida.setText("Estado partida: Partida en juego.");
 				btnCrearPartida.setEnabled(false);
@@ -204,5 +188,10 @@ public class ServerFrame extends JFrame {
 		lblDatosServidor.setText("Servidor: " + Config.get("ip") + ":" + Config.get("port"));
 		lblEstadoServidor.setText("Estado servidor: Conectado.");
 		btnConectarServidor.setEnabled(false);
+	}
+
+	public void setFinishedMatch() {
+		btnCrearPartida.setEnabled(true);
+		btnVerPartida.setEnabled(false);
 	}
 }
