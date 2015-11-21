@@ -1,6 +1,7 @@
 package game.logic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import game.map.MapReader;
 import server.config.Config;
@@ -132,6 +133,8 @@ public class Match {
 		if(objA.getClass()==Pacman.class && objB.getClass() == Ghost.class){
 			Pacman cA = (Pacman)objA;
 			Ghost cB = (Ghost)objB;
+		
+		
 			dist = (cA.posX+cA.width/2)*(cA.posX+cA.width/2)+(cA.posY+cA.height/2)+cA.posY+cA.height/2 
 				    - (cB.posX+cB.width/2)*(cB.posX+cB.width/2)+(cB.posY+cB.height/2)+cB.posY+cB.height/2;
 			radios = cA.height/2 + cB.height/2;
@@ -166,16 +169,61 @@ public class Match {
 			}
 		
 		}
+		if(objB.getClass()==Ghost.class && objA.getClass() == Ghost.class){
+			Ghost cB = (Ghost)objB;
+			Ghost cA = (Ghost)objA;
+			dist = (cA.posX+cA.width/2)*(cA.posX+cA.width/2)+(cA.posY+cA.height/2)+cA.posY+cA.height/2 
+				    - (cB.posX+cB.width/2)*(cB.posX+cB.width/2)+(cB.posY+cB.height/2)+cB.posY+cB.height/2;
+			radios = cA.height/2 + cB.height/2;
+			if(dist - radios <=0){
+				if(cA.getPower()!=-1 && cB.getPower()==-1){
+					cB.morir();
+					cA.killedGhost();
+				}
+				else if(cA.getPower()==-1 && cB.getPower()!=-1){
+					cA.morir();
+					cB.killedGhost();
+				}
+				else
+				{
+					cA.congelar();
+					cB.congelar();
+				}
+				
+			}
+		}	
 		
-		
-		
-			
-			
+	}
+	public void collisions(Character car, ArrayList<Drawable> ball, ArrayList<Drawable> superb){
+		int x, y, posCar, posTot, radCar, radTot;
+		posCar = car.getPosX()*car.getPosX()+car.getPosY()*car.getPosY();
+		radCar = car.getHeight()/1; 
+		if(car.getClass()==Pacman.class){
+			Pacman p = (Pacman)car;
+			for(int i=0; i<ball.size();i++){
+				posTot = posCar + ball.get(i).getPosY()*ball.get(i).getPosY()+ball.get(i).getPosX()*ball.get(i).getPosX();
+				radTot = radCar + ball.get(i).getHeight()/2;
+				if(posTot - radTot <=0){
+					ball.remove(i);
+					p.comeBolita();
+				}
+			}
+		}
+		else
+			for(int i=0; i<superb.size();i++){
+				posTot= posCar + superb.get(i).getPosY()*superb.get(i).getPosY()+
+						superb.get(i).getPosX()*superb.get(i).getPosX();
+				radTot = radCar + superb.get(i).getHeight()/2;
+				if(posTot - radTot <=0){
+					superb.remove(i);
+					car.power();
+				}
+			}
 		
 	}
 	
 	public void group_collisions(Pacman pacman, Ghost[] ghosts) {
-
+		
 	}
 
 	public void group_group_collisions(Character[] characters, Drawable[] superballs) {

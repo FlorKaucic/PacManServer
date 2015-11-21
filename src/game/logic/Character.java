@@ -82,6 +82,11 @@ public class Character extends Drawable {
 		return lifeSpan;
 	}
 
+	public void power() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	
 }
