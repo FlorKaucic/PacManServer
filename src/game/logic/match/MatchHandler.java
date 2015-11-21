@@ -30,7 +30,6 @@ public class MatchHandler extends Thread {
 //			JOptionPane.showMessageDialog(null, "Error de ejecucion.", "Error", JOptionPane.ERROR_MESSAGE);
 //			System.exit(0);
 //		}
-//		System.out.println("MANDO LOS COUNTDOOOWN");
 //		match.broadcast("COUNTDOWN");
 		Timer t = new Timer(10000, new ActionListener() {
 			@Override

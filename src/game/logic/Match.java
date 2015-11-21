@@ -1,10 +1,6 @@
 package game.logic;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import javax.swing.Timer;
 
 import game.map.MapReader;
 import server.config.Config;
@@ -84,15 +80,16 @@ public class Match {
 	}
 	
 	public void start() {
-		StringBuffer msg = new StringBuffer("START ");
-		for(int i = 0; i < characters.size(); i++){
-			Character c = characters.get(i);
-			msg.append(c.desX + " " + c.desY + " " + 
-					c.width + " " + c.height + " " + 
-					c.vel + " " + c.lifeSpan + " " +
-					c.powerSpan + "ENL"); 
-		}
-		broadcast(msg.toString());
+//		StringBuffer msg = new StringBuffer("START ");
+//		for(int i = 0; i < characters.size(); i++){
+//			Character c = characters.get(i);
+//			msg.append(c.desX + " " + c.desY + " " + 
+//					c.width + " " + c.height + " " + 
+//					c.vel + " " + c.lifeSpan + " " +
+//					c.powerSpan + "ENL"); 
+//		}
+//		broadcast(msg.toString());
+		broadcast("HOLI");
 		time = 0;
 		playing = true;
 	}

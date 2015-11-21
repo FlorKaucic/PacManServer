@@ -39,8 +39,6 @@ public class ServerThread extends Thread {
 			clientSocket.close();
 		} catch (IOException e) {
 			if(this.profile!=-1){
-				JOptionPane.showMessageDialog(null, "Se fue un jugador de la partida."
-						+ "\nSe cerrara el servidor.", "Partida", JOptionPane.ERROR_MESSAGE);
 				System.exit(0);
 			}
 			try {
@@ -57,6 +55,7 @@ public class ServerThread extends Thread {
 	}
 
 	public void send(String message) {
+		System.out.println(profile + message);
 		out.println(message);
 	}
 
