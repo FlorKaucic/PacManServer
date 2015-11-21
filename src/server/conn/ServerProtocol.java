@@ -39,9 +39,16 @@ public class ServerProtocol {
 		if (input.startsWith("READY")){
 			return "READYOK";
 		}
+		if (input.startsWith("MOVE")){
+			processMovement(caller, input.substring(5));
+		}
 		if (input.startsWith("PING"))
 			return "PONG";
 		return null;
+	}
+
+	private static void processMovement(ServerThread caller, String input) {
+		Match.getInstance().setMovement(caller.getProfile(), Integer.parseInt(input));
 	}
 
 	private static String processStats() {
@@ -77,7 +84,7 @@ public class ServerProtocol {
 		int profile = ((viewer)?-1:Match.getInstance().addCharacter());
 		caller.setUser(user);
 		caller.setProfile(profile);
-//		Match.getInstance().addListener(caller);
+		Match.getInstance().addListener(caller);
 		return "LOGINOK " + profile + " " + user.getId() + " " + user.getNickname();
 	}
 

@@ -204,8 +204,24 @@ public class Match {
 	}
 
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		for(int i = 0; i<characters.size(); i++){
+			Character c = characters.get(i);
+			if(c.update()){
+				broadcast("MOVE "+i+" "+c.getPosX()+" "+c.getPosY()+" "+c.getDesX()+" "+c.getDesY());
+			}
+		}
 	}
 
+	public void setMovement(int profile, int dir) {
+		if(profile==-1) return;
+		this.characters.get(profile).setDir(dir);
+	}
+
+	public int getPath(int x, int y){
+		int i = y / 50;
+		i = (i >= map.length) ? map.length - 1 : ((i <= 0) ? 0 : i);
+		int j = x / 50;
+		j = (j >= map[0].length) ? map[0].length - 1 : ((j <= 0) ? 0 : j);
+		return map[i][j] / 8;
+	}
 }
