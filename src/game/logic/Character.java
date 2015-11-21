@@ -34,13 +34,54 @@ public class Character extends Drawable {
 		this.posY = 50;
 	}
 
+	public int getDesX() {
+		return desX;
+	}
+
 	public void setDesX(int desX) {
 		this.desX = desX;
+	}
+
+	public int getDesY() {
+		return desY;
 	}
 
 	public void setDesY(int desY) {
 		this.desY = desY;
 	}
+
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower() {
+		this.power++;
+	}
+
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife() {
+		this.life++;
+	}
+
+	public int getVel() {
+		return vel;
+	}
+
+	public boolean isMoving() {
+		return moving;
+	}
+
+	public int getPowerSpan() {
+		return powerSpan;
+	}
+
+	public int getLifeSpan() {
+		return lifeSpan;
+	}
+
 	
 	
 }

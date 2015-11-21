@@ -6,48 +6,40 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import javax.swing.JOptionPane;
-
 import game.logic.User;
 import server.conn.alert.ClientAlert;
 
 public class ServerThread extends Thread {
-	Socket clientSocket = null;
 	PrintWriter out = null;
 	BufferedReader in = null;
 	User user;
 	int profile = -1;
 	
 	public ServerThread(Socket clientSocket) {
-		this.clientSocket = clientSocket;
+		try {
+			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			out = new PrintWriter(clientSocket.getOutputStream(), true);
+		} catch (IOException e) {
+			if(this.profile!=-1){
+				System.exit(0);
+			}
+			ClientAlert dialog = new ClientAlert("Se desconecto un cliente.");
+			dialog.setVisible(true);
+		}
 	}
 
 	@Override
 	public void run() {
 		try {
-			out = new PrintWriter(clientSocket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			String inputLine, outputLine;
-
 			out.println("CONNECTED");
-
 			while ((inputLine = in.readLine()) != null) {
 				outputLine = ServerProtocol.processInput(this, inputLine);
 				out.println(outputLine);
 			}
-			in.close();
-			clientSocket.close();
 		} catch (IOException e) {
 			if(this.profile!=-1){
 				System.exit(0);
-			}
-			try {
-				in.close();
-				clientSocket.close();
-			} catch (IOException e1) {
-				ClientAlert dialog = new ClientAlert("Se desconecto un cliente.");
-				dialog.setVisible(true);
-				return;
 			}
 			ClientAlert dialog = new ClientAlert("Se desconecto un cliente.");
 			dialog.setVisible(true);
@@ -55,8 +47,15 @@ public class ServerThread extends Thread {
 	}
 
 	public void send(String message) {
-		System.out.println(profile + message);
-		out.println(message);
+		try{
+			out.println(message);
+		}catch(Exception e){
+			if(this.profile!=-1){
+				System.exit(0);
+			}
+			ClientAlert dialog = new ClientAlert("No se pudo comunicar.");
+			dialog.setVisible(true);
+		}
 	}
 
 	public void setUser(User user) {

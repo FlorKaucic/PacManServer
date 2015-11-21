@@ -38,8 +38,10 @@ public class MatchHandler extends Thread {
 				int count = 0;
 				while (!match.isFinished()) {
 					match.update();
-					if(count==40)
+					if(count==40){
 						match.setTime();
+						count = 0;
+					}
 					count++;
 					try {
 						Thread.sleep(25);
