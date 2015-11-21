@@ -127,7 +127,8 @@ public class Match {
 	
 	
 	public void collisions(Object objA, Object objB) {
-	
+		if(objA==null || objB==null)
+			return;
 		int dist;
 		int radios;
 		if(objA.getClass()==Pacman.class && objB.getClass() == Ghost.class){
@@ -141,10 +142,12 @@ public class Match {
 			if(dist - radios <=0){
 				if(cA.getPower()!=1){
 					cB.morir();
+					System.out.println("muereB");
 					cA.killedGhost();
 				}
 				else{
 					cA.morir();
+					System.out.println("MuereA");
 					cB.killedPacman();
 				}
 				
@@ -182,10 +185,11 @@ public class Match {
 				}
 				else if(cA.getPower()==-1 && cB.getPower()!=-1){
 					cA.morir();
+					System.out.println("Muere a");
 					cB.killedGhost();
 				}
 				else
-				{
+				{System.out.println("Se congelan");
 					cA.congelar();
 					cB.congelar();
 				}
@@ -196,6 +200,8 @@ public class Match {
 	}
 	public void collisions(Character car, ArrayList<Drawable> ball, ArrayList<Drawable> superb){
 		int x, y, posCar, posTot, radCar, radTot;
+		if(car==null)
+			return;
 		posCar = car.getPosX()*car.getPosX()+car.getPosY()*car.getPosY();
 		radCar = car.getHeight()/1; 
 		if(car.getClass()==Pacman.class){
@@ -205,6 +211,7 @@ public class Match {
 				radTot = radCar + ball.get(i).getHeight()/2;
 				if(posTot - radTot <=0){
 					ball.remove(i);
+					broadcast("BALLDOWN "+(ball.get(i).getPosY()/50) + " " + (ball.get(i).getPosX()/50));
 					p.comeBolita();
 				}
 			}
@@ -216,6 +223,8 @@ public class Match {
 				radTot = radCar + superb.get(i).getHeight()/2;
 				if(posTot - radTot <=0){
 					superb.remove(i);
+					broadcast("SBALLDOWN " +(ball.get(i).getPosY()/50) + " " + (ball.get(i).getPosX()/50));
+					System.out.println("poder");
 					car.power();
 				}
 			}
@@ -252,12 +261,15 @@ public class Match {
 	}
 
 	public void update() {
-		for(int i = 0; i<characters.size(); i++){
+		for(int i = 0; i<characters.size()-1; i++){
 			Character c = characters.get(i);
 			if(c.update()){
 				broadcast("MOVE "+i+" "+c.getPosX()+" "+c.getPosY()+" "+c.getDesX()+" "+c.getDesY());
 			}
+			collisions(c, characters.get(i+1));
+			collisions(c, balls, superballs);
 		}
+		
 	}
 
 	public void setMovement(int profile, int dir) {
