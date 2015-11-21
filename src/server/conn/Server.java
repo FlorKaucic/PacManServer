@@ -51,7 +51,7 @@ public class Server extends Thread {
 			while (true) {
 				clientSocket = serverSocket.accept();
 				ServerThread t = new ServerThread(clientSocket);
-				Match.getInstance().addListener(t);
+//				Match.getInstance().addListener(t);
 				t.start();
 				System.out.println("Nuevo cliente");
 				ClientAlert dialog = new ClientAlert("Se conecto un cliente.");

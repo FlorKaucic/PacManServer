@@ -65,4 +65,8 @@ public class ServerThread extends Thread {
 	public void setProfile(int profile) {
 		this.profile = profile;
 	}
+	
+	public int getProfile(){
+		return this.profile;
+	}
 }
