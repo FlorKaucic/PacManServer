@@ -11,6 +11,7 @@ import server.gui.ServerFrame;
 
 public class MatchHandler extends Thread {
 	private ServerFrame caller;
+	private Timer t;
 
 	public void run() {
 		Match match = Match.getInstance();
@@ -31,7 +32,7 @@ public class MatchHandler extends Thread {
 //			System.exit(0);
 //		}
 //		match.broadcast("COUNTDOWN");
-		Timer t = new Timer(10000, new ActionListener() {
+		t = new Timer(10000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				match.start();
@@ -52,6 +53,7 @@ public class MatchHandler extends Thread {
 				}
 				System.out.println("Partida terminada");
 				caller.setFinishedMatch();
+				t.stop();
 			}
 		});
 		t.start();

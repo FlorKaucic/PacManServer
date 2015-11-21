@@ -24,39 +24,41 @@ public class Character extends Drawable {
 	
 	public boolean update(){
 		int path = Match.getInstance().getPath(this.posX, this.posY);
-		this.checkPos(path);
+		boolean ret = false;
+		if(this.checkPos(path))
+			ret = true;
 		if(dir!=-1){
 			if(dir==0&&canGoLeft(path)){
 				this.desX=-1;
 				this.desY=0;
-				return true;
+				ret = true;
 			}else if(dir==1&&canGoUp(path)){
 				this.desX=0;
 				this.desY=-1;
-				return true;
+				ret = true;
 			}else if(dir==2&&canGoRigth(path)){
 				this.desX=1;
 				this.desY=0;
-				return true;
+				ret = true;
 			}else if(dir==3&&canGoDown(path)){
 				this.desX=0;
 				this.desY=1;
-				return true;
+				ret = true;
 			}
 		}
 		this.posX += this.vel * this.desX;
 		this.posY += this.vel * this.desY;
-		return false;
+		return ret;
 	}
 	
-	public void checkPos(int path){
+	public boolean checkPos(int path){
 		if (this.posX + this.width < 0){
 			this.posX = 500;
-			return;
+			return true;
 		}
 		if (this.posX > 500){
 			this.posX = -this.width;
-			return;
+			return true;
 		}
 		
 		int x, y;
@@ -67,38 +69,42 @@ public class Character extends Drawable {
 			// Si va a la izq y esta a la altura de una posible pared	
 			this.desX = 0;
 			this.posX = this.posX - x + 5;
-			return;
+			this.life = 0;
+			return true;
 		}
 		if (desX > 0 && x + this.width > 45 && !canGoRigth(path)) {
 			// Si va a la izq y esta a la altura de una posible pared	
 			this.desX = 0;
 			this.posX = this.posX - (x + this.width) + 45;
-			return;
+			this.life = 0;
+			return true;
 		}
 		if (desY < 0 && y < 5 && !canGoUp(path)) {
 			// Si va a la izq y esta a la altura de una posible pared	
 			this.desY = 0;
 			this.posY = this.posY - y + 5;
-			return;
+			this.life = 0;
+			return true;
 		}
 		if (desY > 0 && y + this.width > 45 && !canGoDown(path)) {
 			// Si va a la izq y esta a la altura de una posible pared	
 			this.desY = 0;
 			this.posY = this.posY - (y + this.height) + 45;
-			return;
+			this.life = 0;
+			return true;
 		}
 		
-		if (desY != 0 && x <= (this.width / 2)) {
+		if (desY != 0 && x != (this.width / 2)) {
 			this.posX = (this.posX / 50) * 50 + (50 - this.width) / 2;
-			return;
+			return true;
 		}
-		if (desX != 0 && y <= (this.height / 2)) {
+		if (desX != 0 && y != (this.height / 2)) {
 			this.posY = (this.posY / 50) * 50 + (50 - this.height) / 2;
-			return;
+			return true;
 		}
-		
-		this.desX = 0;
-		this.desY = 0;
+		return false;
+//		this.desX = 0;
+//		this.desY = 0;
 	}
 	
 	private boolean canGoLeft(int path){

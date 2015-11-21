@@ -14,6 +14,7 @@ import server.gui.UserMgrFrame;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -160,7 +161,11 @@ public class ServerFrame extends JFrame {
 		btnVerPartida.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				try {
+					Runtime.getRuntime().exec("java -jar PacManClient.jar VIEWER");
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(null, "No se pudo abrir un visor de la partida.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		contentPane.add(btnVerPartida);
