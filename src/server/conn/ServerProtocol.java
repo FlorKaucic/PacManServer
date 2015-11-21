@@ -36,6 +36,11 @@ public class ServerProtocol {
 		if (input.startsWith("GETALLSTATS")) {
 			return processStats();
 		}
+		if (input.startsWith("READY")){
+			return "READYOK";
+		}
+		if (input.startsWith("PING"))
+			return "PONG";
 		return null;
 	}
 
@@ -72,7 +77,7 @@ public class ServerProtocol {
 		int profile = ((viewer)?-1:Match.getInstance().addCharacter());
 		caller.setUser(user);
 		caller.setProfile(profile);
-		Match.getInstance().addListener(caller);
+//		Match.getInstance().addListener(caller);
 		return "LOGINOK " + profile + " " + user.getId() + " " + user.getNickname();
 	}
 

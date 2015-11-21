@@ -52,7 +52,7 @@ public class Match {
 			v = Integer.parseInt(Config.get("pacman_vel"));
 			l = Integer.parseInt(Config.get("pacman_lifespan"));
 			p = Integer.parseInt(Config.get("pacman_powerspan"));
-
+			System.out.println(x+" "+y+" "+w+" "+h+" "+v+" "+l+" "+p);
 			characters.add(new Pacman(x,y,w,h,v,l,p));
 			
 			return 0;
@@ -67,6 +67,7 @@ public class Match {
 			l = Integer.parseInt(Config.get("ghost_lifespan"));
 			p = Integer.parseInt(Config.get("ghost_powerspan"));
 
+			System.out.println(x+" "+y+" "+w+" "+h+" "+v+" "+l+" "+p);
 			characters.add(new Ghost(x,y,w,h,v,l,p));
 			
 			return characters.size()-1;
@@ -81,16 +82,16 @@ public class Match {
 	}
 	
 	public void start() {
-//		StringBuffer msg = new StringBuffer("START ");
-//		for(int i = 0; i < characters.size(); i++){
-//			Character c = characters.get(i);
-//			msg.append(c.desX + " " + c.desY + " " + 
-//					c.width + " " + c.height + " " + 
-//					c.vel + " " + c.lifeSpan + " " +
-//					c.powerSpan + "ENL"); 
-//		}
-//		broadcast(msg.toString());
-		broadcast("HOLI");
+		StringBuffer msg = new StringBuffer("START ");
+		for(int i = 0; i < characters.size(); i++){
+			Character c = characters.get(i);
+			msg.append(c.getPosX() + " " + c.getPosY() + " " + 
+					c.getWidth() + " " + c.getHeight() + " " + 
+					c.getVel() + " " + c.getLifeSpan() + " " +
+					c.getPowerSpan() + "ELN"); 
+		}
+		String finalstring = msg.toString();
+		broadcast(finalstring.substring(0, finalstring.length()-3));
 		time = 0;
 		playing = true;
 	}

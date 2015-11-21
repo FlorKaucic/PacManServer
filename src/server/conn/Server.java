@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import game.logic.Match;
 import server.config.Config;
 import server.conn.alert.ClientAlert;
 
@@ -49,7 +50,8 @@ public class Server extends Thread {
 		try {
 			while (true) {
 				clientSocket = serverSocket.accept();
-				Thread t = new ServerThread(clientSocket);
+				ServerThread t = new ServerThread(clientSocket);
+				Match.getInstance().addListener(t);
 				t.start();
 				System.out.println("Nuevo cliente");
 				ClientAlert dialog = new ClientAlert("Se conecto un cliente.");

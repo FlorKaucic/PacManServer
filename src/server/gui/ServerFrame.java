@@ -1,6 +1,5 @@
 package server.gui;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,6 +19,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+
+import java.awt.EventQueue;
 import java.awt.Font;
 
 @SuppressWarnings("serial")
@@ -36,9 +37,6 @@ public class ServerFrame extends JFrame {
 	private JLabel lblEstadoServidor;
 	private JLabel lblEstadoPartida;
 	
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 
 		Config.load();
@@ -55,7 +53,8 @@ public class ServerFrame extends JFrame {
 			}
 		});
 	}
-
+	
+	
 	/**
 	 * Create the frame.
 	 */
