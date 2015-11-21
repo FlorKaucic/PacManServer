@@ -1,5 +1,9 @@
 package server.config;
 
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,6 +25,13 @@ public class Config {
 			input = new FileInputStream("sconfig.properties");
 			CONFIG.load(input);
 			CONFIG.put("ip",InetAddress.getLocalHost().getHostAddress());
+			
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+			
+			CONFIG.put("screen_width", String.valueOf(screenSize.width));
+			CONFIG.put("screen_height", String.valueOf(screenSize.height));
+			CONFIG.put("taskbar_height", String.valueOf(screenSize.height - winSize.height));
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "No se puede cargar properties.", "Servidor", JOptionPane.ERROR_MESSAGE);
 		} finally {

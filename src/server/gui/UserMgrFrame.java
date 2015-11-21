@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import server.config.Config;
 import game.logic.User;
 import server.config.UserTableModel;
 import server.persistence.UserDAO;
@@ -74,7 +75,9 @@ public class UserMgrFrame extends JFrame {
 		});
 		setTitle("PacMan - Usuarios");
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 488, 550);
+		int x = Integer.parseInt(Config.get("screen_width"))/2-244;
+		int y = Integer.parseInt(Config.get("screen_height"))/2-275;
+		setBounds(x, y, 488, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

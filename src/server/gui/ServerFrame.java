@@ -1,9 +1,6 @@
 package server.gui;
 
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -75,8 +72,9 @@ public class ServerFrame extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setBounds(dim.width / 2 - 200, dim.height / 2 - 250, 400, 500);
+		int x = Integer.parseInt(Config.get("screen_width"))/2-200;
+		int y = Integer.parseInt(Config.get("screen_height"))/2-250;
+		setBounds(x, y, 400, 500);
 		setTitle("Servidor");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

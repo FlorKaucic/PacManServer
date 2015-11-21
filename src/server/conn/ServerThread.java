@@ -6,13 +6,18 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
+import game.logic.User;
 import server.conn.alert.ClientAlert;
 
 public class ServerThread extends Thread {
 	Socket clientSocket = null;
 	PrintWriter out = null;
 	BufferedReader in = null;
-
+	User user;
+	int profile = -1;
+	
 	public ServerThread(Socket clientSocket) {
 		this.clientSocket = clientSocket;
 	}
@@ -27,12 +32,17 @@ public class ServerThread extends Thread {
 			out.println("CONNECTED");
 
 			while ((inputLine = in.readLine()) != null) {
-				outputLine = ServerProtocol.processInput(inputLine);
+				outputLine = ServerProtocol.processInput(this, inputLine);
 				out.println(outputLine);
 			}
 			in.close();
 			clientSocket.close();
 		} catch (IOException e) {
+			if(this.profile!=-1){
+				JOptionPane.showMessageDialog(null, "Se fue un jugador de la partida."
+						+ "\nSe cerrara el servidor.", "Partida", JOptionPane.ERROR_MESSAGE);
+				System.exit(0);
+			}
 			try {
 				in.close();
 				clientSocket.close();
@@ -48,5 +58,13 @@ public class ServerThread extends Thread {
 
 	public void send(String message) {
 		out.println(message);
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setProfile(int profile) {
+		this.profile = profile;
 	}
 }

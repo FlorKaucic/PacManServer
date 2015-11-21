@@ -1,9 +1,11 @@
 package server.conn;
 
+import java.awt.Color;
 import java.sql.SQLException;
 
 import game.logic.Match;
 import game.logic.User;
+import server.conn.alert.ClientAlert;
 import server.persistence.UserDAO;
 
 public class ServerProtocol {
@@ -21,16 +23,14 @@ public class ServerProtocol {
 	// LOGINOK PACMAN/GHOST id nickname
 	// LOGINFAILED [...]
 
-	public static String processInput(String input) {
+	public static String processInput(ServerThread caller, String input) {
 		if (input.startsWith("LOGUP")) {
 			return processLogup(input.substring(6));
 		}
 		if (input.startsWith("LOGIN")) {
-			return processLogin(input.substring(6));
+			return processLogin(caller, input.substring(6));
 		}
 		if (input.startsWith("GETMAP")) {
-			// CHANGE
-			// AGREGAR A LISTA DE BROADCAST
 			return "MAPOK " + Match.getInstance().getMapAsString();
 		}
 		if (input.startsWith("GETALLSTATS")) {
@@ -52,7 +52,7 @@ public class ServerProtocol {
 		}
 	}
 
-	private static String processLogin(String input) {
+	private static String processLogin(ServerThread caller, String input) {
 		boolean viewer = false;
 		if (input.startsWith("VIEWER")) {
 			input = input.substring(7);
@@ -63,19 +63,16 @@ public class ServerProtocol {
 		try {
 			user = UserDAO.get(data[0], data[1]);
 		} catch (SQLException e) {
-			// CHANGE
-			e.printStackTrace();
+			ClientAlert dialog = new ClientAlert("Error de inicio.");
+			dialog.setBorderColor(Color.RED);
+			dialog.setVisible(true);
 		}
 		if (user == null)
 			return "LOGINFAILED";
-		String profile = "VIEWER";
-		if (!viewer) {
-			int pos = Match.getInstance().addCharacter();
-			if (pos == 0)
-				profile = "PACMAN";
-			if (pos > 0)
-				profile = "GHOST" + pos;
-		}
+		int profile = ((viewer)?-1:Match.getInstance().addCharacter());
+		caller.setUser(user);
+		caller.setProfile(profile);
+		Match.getInstance().addListener(caller);
 		return "LOGINOK " + profile + " " + user.getId() + " " + user.getNickname();
 	}
 
