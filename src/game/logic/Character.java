@@ -41,6 +41,19 @@ public class Character extends Drawable {
 	public void setDesY(int desY) {
 		this.desY = desY;
 	}
+
+	/*
+	collision = False
+	        other_pos = other_object.get_position()
+	        distance = dist(self.pos, other_pos)
+	        radius = self.radius + other_object.get_radius()
+	        if (distance - radius) <= 0:
+	            collision = True
+	        return collision
+*/
 	
+	public int getPower(){
+		return power;
+	}
 	
 }

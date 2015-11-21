@@ -6,6 +6,7 @@ import game.map.MapReader;
 import server.config.Config;
 import server.conn.ServerThread;
 
+
 public class Match {
 	private int time = 0;
 	private int[][] map;
@@ -120,11 +121,58 @@ public class Match {
 	public int getNumberOfCharacters() {
 		return this.characters.size();
 	}
-
+	
+	
+	
 	public void collisions(Object objA, Object objB) {
-
+	
+		int dist;
+		int radios;
+		if(objA.getClass()==Pacman.class && objB.getClass() == Ghost.class){
+			Pacman cA = (Pacman)objA;
+			Ghost cB = (Ghost)objB;
+			dist = (cA.posX+cA.width/2)*(cA.posX+cA.width/2)+(cA.posY+cA.height/2)+cA.posY+cA.height/2 
+				    - (cB.posX+cB.width/2)*(cB.posX+cB.width/2)+(cB.posY+cB.height/2)+cB.posY+cB.height/2;
+			radios = cA.height/2 + cB.height/2;
+			if(dist - radios <=0){
+				if(cA.getPower()!=1){
+					cB.morir();
+					cA.killedGhost();
+				}
+				else{
+					cA.morir();
+					cB.killedPacman();
+				}
+				
+			}
+		}
+		if(objB.getClass()==Pacman.class && objA.getClass() == Ghost.class){
+			Pacman cB = (Pacman)objB;
+			Ghost cA = (Ghost)objA;
+			dist = (cA.posX+cA.width/2)*(cA.posX+cA.width/2)+(cA.posY+cA.height/2)+cA.posY+cA.height/2 
+				    - (cB.posX+cB.width/2)*(cB.posX+cB.width/2)+(cB.posY+cB.height/2)+cB.posY+cB.height/2;
+			radios = cA.height/2 + cB.height/2;
+			if(dist - radios <=0){
+				if(cB.getPower()!=-1){
+					cA.morir();
+					cB.killedGhost();
+				}
+				else{
+					cB.morir();
+					cA.killedPacman();
+				}
+				
+			}
+		
+		}
+		
+		
+		
+			
+			
+		
 	}
-
+	
 	public void group_collisions(Pacman pacman, Ghost[] ghosts) {
 
 	}

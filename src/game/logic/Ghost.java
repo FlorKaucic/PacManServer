@@ -26,4 +26,8 @@ public class Ghost extends Character {
 		return this.ghostsKilled;
 	}
 	
+	public void morir(){
+		
+	}
+	
 }
