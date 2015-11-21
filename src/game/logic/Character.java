@@ -1,5 +1,7 @@
 package game.logic;
 
+import server.config.Config;
+
 public class Character extends Drawable {
 	protected int desX;
 	protected int desY;
@@ -123,11 +125,6 @@ public class Character extends Drawable {
 		return !(path == 1 || path == 5 || path == 6 || path == 9);
 	}
 	
-	public void respawn(){
-		this.posX = 50;
-		this.posY = 50;
-	}
-
 	public int getDesX() {
 		return desX;
 	}
@@ -184,6 +181,13 @@ public class Character extends Drawable {
 		this.dir = dir;		
 	}
 
-
+	public void respawn() {
+		this.posX = 10;
+		this.posY = 10;
+		this.desX = 0;
+		this.desY = 0;
+		this.life = 0;
+		this.moving = false;
+	}
 	
 }

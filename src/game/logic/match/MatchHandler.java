@@ -52,8 +52,19 @@ public class MatchHandler extends Thread {
 					}
 				}
 				System.out.println("Partida terminada");
+				match.broadcast("FINISHED");
 				caller.setFinishedMatch();
 				t.stop();
+				
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException ex) {
+					JOptionPane.showMessageDialog(null, "Error de ejecucion.", "Error", JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
+				}
+				
+				match.sendScores();
+				match.finish();
 			}
 		});
 		t.start();
