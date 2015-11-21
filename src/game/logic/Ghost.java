@@ -29,5 +29,10 @@ public class Ghost extends Character {
 	public void morir(){
 		
 	}
+
+	public void congelar() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
