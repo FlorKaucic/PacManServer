@@ -10,7 +10,8 @@ public class Character extends Drawable {
 	protected int lifeSpan;
 	protected boolean moving;
 	protected int dir;
-	
+	protected int freeze;
+
 	public Character(int posX, int posY, int width, int height, int vel, int lifeSpan, int powerSpan) {
 		super(posX, posY, width, height);
 		this.vel = vel;
@@ -20,37 +21,45 @@ public class Character extends Drawable {
 		this.lifeSpan = lifeSpan;
 		this.powerSpan = powerSpan;
 		this.dir = -1;
+		this.freeze = 0;
 	}
-	
-	public boolean update(){
-		int path = Match.getInstance().getPath(this.posX, this.posY);
-		boolean ret = false;
-		if(this.checkPos(path))
-			ret = true;
-		if(dir!=-1){
-			if(dir==0&&canGoLeft(path)){
-				this.desX=-1;
-				this.desY=0;
+
+	public boolean update() {
+		if (freeze == 0) {
+			int path = Match.getInstance().getPath(this.posX, this.posY);
+			boolean ret = false;
+			if (this.checkPos(path))
 				ret = true;
-			}else if(dir==1&&canGoUp(path)){
-				this.desX=0;
-				this.desY=-1;
-				ret = true;
-			}else if(dir==2&&canGoRigth(path)){
-				this.desX=1;
-				this.desY=0;
-				ret = true;
-			}else if(dir==3&&canGoDown(path)){
-				this.desX=0;
-				this.desY=1;
-				ret = true;
+			if (dir != -1) {
+				if (dir == 0 && canGoLeft(path)) {
+					this.desX = -1;
+					this.desY = 0;
+					ret = true;
+				} else if (dir == 1 && canGoUp(path)) {
+					this.desX = 0;
+					this.desY = -1;
+					ret = true;
+				} else if (dir == 2 && canGoRigth(path)) {
+					this.desX = 1;
+					this.desY = 0;
+					ret = true;
+				} else if (dir == 3 && canGoDown(path)) {
+					this.desX = 0;
+					this.desY = 1;
+					ret = true;
+				}
 			}
+			this.posX += this.vel * this.desX;
+			this.posY += this.vel * this.desY;
+
+			return ret;
+		} else {
+			freeze--;
+			return false;
 		}
-		this.posX += this.vel * this.desX;
-		this.posY += this.vel * this.desY;
-		return ret;
+
 	}
-	
+
 	public boolean checkPos(int path){
 		if (this.posX + this.width < 0){
 			this.posX = 500;
@@ -106,26 +115,21 @@ public class Character extends Drawable {
 //		this.desX = 0;
 //		this.desY = 0;
 	}
-	
-	private boolean canGoLeft(int path){
+
+	private boolean canGoLeft(int path) {
 		return !(path == 2 || path == 3 || path == 5 || path == 8);
 	}
-	
-	private boolean canGoRigth(int path){
+
+	private boolean canGoRigth(int path) {
 		return !(path == 2 || path == 4 || path == 6 || path == 7);
 	}
-	
-	private boolean canGoUp(int path){
+
+	private boolean canGoUp(int path) {
 		return !(path == 1 || path == 3 || path == 4 || path == 10);
 	}
-	
-	private boolean canGoDown(int path){
+
+	private boolean canGoDown(int path) {
 		return !(path == 1 || path == 5 || path == 6 || path == 9);
-	}
-	
-	public void respawn(){
-		this.posX = 50;
-		this.posY = 50;
 	}
 
 	public int getDesX() {
@@ -176,14 +180,25 @@ public class Character extends Drawable {
 		return lifeSpan;
 	}
 
+	public void freeze() {
+		this.freeze = 80;
+	}
 
 	public void power() {
 		// TODO Auto-generated method stub
 	}
+
 	public void setDir(int dir) {
-		this.dir = dir;		
+		this.dir = dir;
 	}
 
+	public void respawn() {
+		this.posX = 10;
+		this.posY = 10;
+		this.desX = 0;
+		this.desY = 0;
+		this.life = 0;
+		this.moving = false;
+	}
 
-	
 }

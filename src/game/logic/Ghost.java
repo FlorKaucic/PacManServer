@@ -1,5 +1,7 @@
 package game.logic;
 
+import server.config.Config;
+
 public class Ghost extends Character {
 	private int pacmansKilled;
 	private int ghostsKilled;
@@ -26,11 +28,16 @@ public class Ghost extends Character {
 		return this.ghostsKilled;
 	}
 	
-	public void morir(){
-		
+	public void respawn(){
+		this.posX = Integer.parseInt(Config.get("ghost_posX"));
+		this.posY = Integer.parseInt(Config.get("ghost_posX"));
+		this.desX = 0;
+		this.desY = 0;
+		this.life = 0;
+		this.moving = false;
 	}
 
-	public void congelar() {
+	public void freeze() {
 		// TODO Auto-generated method stub
 		
 	}

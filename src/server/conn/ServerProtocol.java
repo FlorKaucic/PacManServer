@@ -75,7 +75,7 @@ public class ServerProtocol {
 		try {
 			user = UserDAO.get(data[0], data[1]);
 		} catch (SQLException e) {
-			ClientAlert dialog = new ClientAlert("Error de inicio.");
+			ClientAlert dialog = new ClientAlert("Error de inicio de sesion.");
 			dialog.setBorderColor(Color.RED);
 			dialog.setVisible(true);
 		}
@@ -94,8 +94,9 @@ public class ServerProtocol {
 		try {
 			user = UserDAO.save(data[0], data[1]);
 		} catch (SQLException e) {
-			//CHANGE
-			e.printStackTrace();
+			ClientAlert dialog = new ClientAlert("Error de registro.");
+			dialog.setBorderColor(Color.RED);
+			dialog.setVisible(true);
 		}
 		if (user == null)
 			return "LOGUPFAILED";
