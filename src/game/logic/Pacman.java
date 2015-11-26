@@ -23,7 +23,6 @@ public class Pacman extends Character {
 
 
 	public void killedGhost() {
-		// TODO Auto-generated method stub
 		
 	}
 	

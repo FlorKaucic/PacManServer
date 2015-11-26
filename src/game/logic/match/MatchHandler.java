@@ -63,7 +63,7 @@ public class MatchHandler extends Thread {
 					System.exit(0);
 				}
 				
-				match.sendScores();
+				//match.sendScores();
 				match.finish();
 			}
 		});

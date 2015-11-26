@@ -7,6 +7,11 @@ import server.config.Config;
 import server.conn.ServerThread;
 
 public class Match {
+	private static final int eatBall=10;
+	private static final int eatSBall=50;
+	private static final int pKillGhost=150;
+	private static final int gKillGhost=200;
+	private static final int killPacman=250;
 	private int time = 0;
 	private int[][] map;
 	private ArrayList<Character> characters;
@@ -16,7 +21,8 @@ public class Match {
 	private static Match INSTANCE = null;
 	private boolean playing = false;
 	private ArrayList<ServerThread> listeners = null;
-
+	private int []scores = new int [4];
+	
 	private Match() {
 		characters = new ArrayList<Character>();
 		balls = new ArrayList<Drawable>();
@@ -91,6 +97,7 @@ public class Match {
 		broadcast(finalstring.substring(0, finalstring.length() - 3));
 		time = 0;
 		playing = true;
+		//scores = new int [4];
 	}
 
 	public void finish() {
@@ -100,8 +107,10 @@ public class Match {
 	}
 
 	public boolean isFinished() {
-		if (time >= 60)
+		if (time >= 120){
 			playing = false;
+			
+		}
 		return !playing;
 	}
 
@@ -121,40 +130,52 @@ public class Match {
 		return this.characters.size();
 	}
 
-	public void collisions(Object objA, Object objB) {
+	public void collisions(Character car, int c) {
 
-		if (objA == null || objB == null)
+		int difX, difY, difTot, radTot;
+
+		if (car == null)
 			return;
-
-		int dist;
-		int radios;
-
-		if (objA.getClass() == Pacman.class && objB.getClass() == Ghost.class) {
-			Pacman cA = (Pacman) objA;
-			Ghost cB = (Ghost) objB;
-
-			dist = (cA.posX + cA.width / 2) * (cA.posX + cA.width / 2) + (cA.posY + cA.height / 2) + cA.posY
-					+ cA.height / 2 - (cB.posX + cB.width / 2) * (cB.posX + cB.width / 2) + (cB.posY + cB.height / 2)
-					+ cB.posY + cB.height / 2;
-			radios = cA.height / 2 + cB.height / 2;
-			if (dist - radios <= 0) {
-				if (cA.getPower() != 1) {
-					cB.respawn();
-					System.out.println("muereB");
-				}
+		
+		for (int i = 0; i < characters.size(); i++) {
+			if(car != characters.get(i)){
+				difX = (car.getPosX()+car.getHeight()/2) - (characters.get(i).getPosX() + characters.get(i).getHeight()/2);
+				difY = (car.getPosY()+car.getWidth()/2) - (characters.get(i).getPosY()+characters.get(i).getWidth()/2);
+	
+				difTot = difX*difX + difY*difY;
+				radTot = car.getHeight() / 2 + characters.get(i).getHeight() / 2;
+				if (difTot - (radTot*radTot) <= 0) {
+					
+					if(car.getClass() == Pacman.class){
+						
+						if(car.getPower()>0){
+							addScore(c, pKillGhost);
+							broadcast("KILLGHOST " + i);
+						}
+						else{
+							car.respawn();
+							broadcast("MOVE " + c + " " + car.getPosX() + " " + car.getPosY() + " " + car.getDesX() + " " + car.getDesY());
+							addScore(i, killPacman);
+							broadcast("KILLPACMAN");
+						}
+					}
+				
+				
+			}
 			}
 		}
-
 	}
 
-	public void collisions(Character car) {
+
+
+	public void collisionsBalls(Character car, int c) {
 		int difX, difY, difTot, radTot;
 
 		if (car == null)
 			return;
 
 		if (car.getClass() == Pacman.class) {
-			Pacman p = (Pacman) car;
+			//Pacman p = (Pacman) car;
 			for (int i = 0; i < balls.size(); i++) {
 				if(balls.get(i)!=null){
 					difX = (car.getPosX()+car.getHeight()/2) - (balls.get(i).getPosX() + balls.get(i).getHeight()/2);
@@ -164,29 +185,34 @@ public class Match {
 					radTot = car.getHeight() / 2 + balls.get(i).getHeight() / 2;
 				if (difTot - (radTot*radTot) <= -car.getWidth()/4) {
 					broadcast("BALLDOWN " + i);
-					System.out.println("a: "+ i + " " + balls.size());
-					System.out.println("b: " + difTot + " " + radTot);
-					System.out.println("BALLDOWN " + (balls.get(i).getPosY()/50) + " " + (balls.get(i).getPosX()/50));
+					addScore(c, eatBall);
 					balls.set(i, null);
-					p.comeBolita();
+					
 				}
 				}
 			}
-		}// else {
-//			for (int i = 0; i < superballs.size(); i++) {
-//				difTot = posCar + superballs.get(i).getPosY() * superballs.get(i).getPosY()
-//						+ superballs.get(i).getPosX() * superballs.get(i).getPosX();
-//				radTot = radCar + superballs.get(i).getHeight() / 2;
-//				if (difTot - radTot <= 0) {
-//					superballs.remove(i);
-//					//broadcast("BALLDOWN " + (ball.get(i).getPosY() / 50) + " " + (ball.get(i).getPosX() / 50));
-//					broadcast("SBALLDOWN" + i);
-//					System.out.println("poder");
-//					car.power();
-//				}
-//			}
+		}
+		
+		for (int i = 0; i < superballs.size(); i++) {
+			if(superballs.get(i)!=null){
+				difX = (car.getPosX()+car.getHeight()/2) - (superballs.get(i).getPosX() + superballs.get(i).getHeight()/2);
+				difY = (car.getPosY()+car.getWidth()/2) - (superballs.get(i).getPosY()+superballs.get(i).getWidth()/2);
+	
+				difTot = difX*difX + difY*difY;
+				radTot = car.getHeight() / 2 + superballs.get(i).getHeight() / 2;
+			if (difTot - (radTot*radTot) <= -car.getWidth()/4) {
+				broadcast("SBALLDOWN " + i);
+				addScore(c, eatSBall);
+				superballs.set(i, null);
+				
+			}
+			}
+		}
+	}
 
-	//	}
+	private void addScore(int i, int s) {
+		scores[i]+= s;
+		broadcast("SCORE " + i + " " + scores[i]);
 	}
 
 	public void group_collisions(Pacman pacman, Ghost[] ghosts) {
@@ -223,7 +249,8 @@ public class Match {
 			Character c = characters.get(i);
 			if (c.update()) {
 				broadcast("MOVE " + i + " " + c.getPosX() + " " + c.getPosY() + " " + c.getDesX() + " " + c.getDesY());
-				collisions(c);
+				collisionsBalls(c, i);
+				collisions(c,i);
 			}
 			
 		}
@@ -232,6 +259,7 @@ public class Match {
 	public void setMovement(int profile, int dir) {
 		if (profile == -1)
 			return;
+		System.out.println("c: " + profile + " " + dir);
 		this.characters.get(profile).setDir(dir);
 	}
 
@@ -242,7 +270,7 @@ public class Match {
 		j = (j >= map[0].length) ? map[0].length - 1 : ((j <= 0) ? 0 : j);
 		return map[i][j] / 8;
 	}
-
+	/*
 	private String createScoresString() {
 		StringBuffer str = new StringBuffer("SCORES ");
 		str.append((this.totalballs - this.balls.size()) + "/" + this.totalballs);
@@ -251,12 +279,12 @@ public class Match {
 			str.append(" " + g.getPacmansKilled() + "-" + g.getGhostsKilled());
 		}
 		return str.toString();
-	}
-
+	}*/
+/*
 	public void sendScores() {
 		broadcast(createScoresString());
-	}
-
+	}*/
+/*
 	public void sendFinalScores() {
 		int pos = -1;
 		if (this.totalballs - this.balls.size() == 0)
@@ -274,13 +302,13 @@ public class Match {
 		}
 		broadcast("WINNER " + pos + " " + createScoresString());
 	}
-
+*/
 	public Point getRespawnPoint() {
 		ArrayList<Point> points = new ArrayList<Point>();
 		boolean[][] mat = new boolean[3][2];
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
-				if (map[i][j] % 1 == 1)
+				if (map[i][j] % 2 == 1)
 					points.add(new Point(i * 50 + 10, j * 50 + 10));
 
 		int x = 0, y = 0;

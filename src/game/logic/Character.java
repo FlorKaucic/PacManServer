@@ -74,6 +74,7 @@ public class Character extends Drawable {
 		x = this.posX % 50; // posicion x dentro del cuadrado
 		y = this.posY % 50; // posicion y dentro del cuadrado
 		
+		
 		if (desX < 0 && x < 5 && !canGoLeft(path)) {
 			// Si va a la izq y esta a la altura de una posible pared	
 			this.desX = 0;
@@ -82,21 +83,21 @@ public class Character extends Drawable {
 			return true;
 		}
 		if (desX > 0 && x + this.width > 45 && !canGoRigth(path)) {
-			// Si va a la izq y esta a la altura de una posible pared	
+			// Si va a la derecha y esta a la altura de una posible pared	
 			this.desX = 0;
 			this.posX = this.posX - (x + this.width) + 45;
 			this.life = 0;
 			return true;
 		}
 		if (desY < 0 && y < 5 && !canGoUp(path)) {
-			// Si va a la izq y esta a la altura de una posible pared	
+			// Si va hacia arriba y esta a la altura de una posible pared	
 			this.desY = 0;
 			this.posY = this.posY - y + 5;
 			this.life = 0;
 			return true;
 		}
 		if (desY > 0 && y + this.width > 45 && !canGoDown(path)) {
-			// Si va a la izq y esta a la altura de una posible pared	
+			// Si va hacia abajo y esta a la altura de una posible pared	
 			this.desY = 0;
 			this.posY = this.posY - (y + this.height) + 45;
 			this.life = 0;
