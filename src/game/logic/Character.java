@@ -49,9 +49,9 @@ public class Character extends Drawable {
 					ret = true;
 				}
 			}
+			
 			this.posX += this.vel * this.desX;
 			this.posY += this.vel * this.desY;
-
 			return ret;
 		} else {
 			freeze--;
@@ -186,7 +186,7 @@ public class Character extends Drawable {
 	}
 
 	public void power() {
-		// TODO Auto-generated method stub
+		
 	}
 
 	public void setDir(int dir) {
@@ -201,5 +201,7 @@ public class Character extends Drawable {
 		this.life = 0;
 		this.moving = false;
 	}
-
+	public void setMoving(boolean b){
+		moving = b;
+	}
 }

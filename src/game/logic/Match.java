@@ -154,9 +154,8 @@ public class Match {
 						}
 						else{
 							car.respawn();
-							broadcast("MOVE " + c + " " + car.getPosX() + " " + car.getPosY() + " " + car.getDesX() + " " + car.getDesY());
 							addScore(i, killPacman);
-							broadcast("KILLPACMAN");
+							broadcast("RESPAWN " + c + " " + car.getPosX() + " " + car.getPosY() + " " + car.getDesX() + " " + car.getDesY());
 						}
 					}
 				
@@ -228,7 +227,6 @@ public class Match {
 	}
 
 	public void broadcast(String message) {
-		System.out.println(listeners.size());
 		for (ServerThread listener : listeners)
 			listener.send(message);
 	}
@@ -259,8 +257,8 @@ public class Match {
 	public void setMovement(int profile, int dir) {
 		if (profile == -1)
 			return;
-		System.out.println("c: " + profile + " " + dir);
 		this.characters.get(profile).setDir(dir);
+		
 	}
 
 	public int getPath(int x, int y) {
@@ -305,59 +303,41 @@ public class Match {
 */
 	public Point getRespawnPoint() {
 		ArrayList<Point> points = new ArrayList<Point>();
-		boolean[][] mat = new boolean[3][2];
+		//boolean[][] mat = new boolean[3][2];
 		for (int i = 0; i < map.length; i++)
 			for (int j = 0; j < map[0].length; j++)
 				if (map[i][j] % 2 == 1)
 					points.add(new Point(i * 50 + 10, j * 50 + 10));
-
-		int x = 0, y = 0;
-		for (int g = 1; g < this.characters.size(); g++) {
-			int a, b;
-			x += Math.floorDiv(this.characters.get(g).getPosX(), 50);
-			y += Math.floorDiv(this.characters.get(g).getPosY(), 50);
-			if (Math.floorDiv(this.characters.get(g).getPosY(), 50) < 4)
-				a = 0;
-			else if (Math.floorDiv(this.characters.get(g).getPosY(), 50) > 7)
-				a = 2;
-			else
-				a = 1;
-			if (Math.floorDiv(this.characters.get(g).getPosX(), 50) < 5)
-				b = 0;
-			else
-				b = 1;
-			mat[a][b] = true;
-		}
-
-		for (int k = 0; k < points.size(); k++) {
-			int a, b;
-			if (Math.floorDiv((int) points.get(k).getY(), 50) < 4)
-				a = 0;
-			else if (Math.floorDiv((int) points.get(k).getY(), 50) > 7)
-				a = 2;
-			else
-				a = 1;
-			if (Math.floorDiv((int) points.get(k).getX(), 50) < 5)
-				b = 0;
-			else
-				b = 1;
-			if (mat[a][b])
-				points.remove(k);
-		}
-
-		Point cm = new Point(x / this.characters.size(), y / this.characters.size());
-		double dist = getDistancia(cm, points.get(0));
-		int pos = 0;
-		for (int k = 1; k < points.size(); k++) {
-			if (getDistancia(cm, points.get(k)) < dist) {
-				dist = getDistancia(cm, points.get(k));
-				pos = k;
+		int p=0;
+		double [] aux = new double [4];
+		double d=Double.MAX_VALUE,
+				dAux;
+		System.out.println("Puntos: " + points.size());
+		
+		for (int i=0; i<points.size();i++){
+			for(int j=1; j<characters.size();j++){
+				if((dAux=getDistancia(points.get(i), characters.get(j).getPosX(), characters.get(j).getPosY()))<d){
+					d=dAux;
+				}
 			}
+			aux[i]=d;
+			d= Double.MAX_VALUE;
 		}
-		return points.get(pos);
+		d=0;
+		for(int i=0; i<aux.length;i++)
+			if(aux[i]>d){
+				p=i;
+				d=aux[i];
+			}
+		
+		return points.get(p);
 	}
 
-	private double getDistancia(Point a, Point b) {
-		return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
+	//private double getDistancia(Point a, Point b) {
+	//	return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
+	//}
+	
+	private double getDistancia(Point a, int x2, int y2) {
+		return Math.sqrt(Math.pow(a.getX() - x2, 2) + Math.pow(a.getY() - y2, 2));
 	}
 }

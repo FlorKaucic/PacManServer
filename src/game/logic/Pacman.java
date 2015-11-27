@@ -19,6 +19,7 @@ public class Pacman extends Character {
 		this.desY = 0;
 		this.life = 0;
 		this.moving = false;
+		dir=-1;
 	}
 
 
